@@ -7,9 +7,19 @@ license = "Apache 2.0"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
-pandas = "^2.2.3"
-simpy = "^4.1.1"
+python = ">=3.10, <3.11.0"
+
+[tool.poetry.dev-dependencies]
+black = "~24.8.0"                                       # The uncompromising code formatter.
+coverage = {extras = ["toml"], version = "~7.6.0"}    # Code coverage measurement for Python
+unittest-xml-reporting = "~3.2"                     # unittest-based test runner with Ant/JUnit like XML reporting.
+pre-commit = "~3.8.0"                                 # A framework for managing and maintaining multi-language pre-commit hooks.
+pre-commit-hooks = "~4.6.0"                           # Some out-of-the-box hooks for pre-commit.
+pyre-check = "0.9.22"                                 # A performant type checker for Python
+pydocstyle = "~6.3"                                 # Python docstring style checker
+pylint = "~3.3.0"                                       # python code static checker
+reorder-python-imports = "~3"                       # Tool for reordering python imports
+freezegun = "^1.2.2"                                # Let your Python tests travel through time
 
 
 [tool.poetry.group.dev.dependencies]
