@@ -4,18 +4,37 @@ import {useTopologyStore} from "@/stores/topology";
 import TrackConfiguration from "@/components/TrackConfiguration.vue";
 import {storeToRefs} from "pinia";
 import ParameterForm from "@/components/ParameterForm.vue";
-import type {PopupSite} from "@/utils/api";
+import type {NewSimulationRequest, PopupSite} from "@/utils/api";
+import {useParametersStore} from "@/stores/parameters";
 
 const ts = useTopologyStore()
-const {topology} = storeToRefs(ts)
-const popupSite = ref<PopupSite>()
+const ps = useParametersStore()
+const {popupSite} = storeToRefs(ts)
+const {parameters} = storeToRefs(ps)
 
 onBeforeMount(async () => {
   await ts.loadTopology()
-  setTimeout(() => {
-    popupSite.value = topology.value.popupSites[0]
-  }, 1)
 })
+
+function simulate(){
+  function findTracksOfFunction(functionAssignment: Function): Track[] {
+   return popupSite.value.tracks.filter( t => t.function === functionAssignment).map(t => t.id)
+  }
+  const requestBody: NewSimulationRequest = {
+    configuration:{
+      popupSite: popupSite.value.id,
+      workshops: findTracksOfFunction('workshop'),
+      retrofitted: findTracksOfFunction('retrofitted'),
+      toBeRetrofitted: findTracksOfFunction('toBeRetrofitted'),
+      stationHead: findTracksOfFunction('stationHead'),
+      parking: findTracksOfFunction('parking'),
+      parameters: parameters.value
+    },
+    popupSite: ts.popupSite
+
+  }
+  console.log(JSON.stringify(requestBody))
+}
 </script>
 
 <template>
@@ -32,7 +51,7 @@ onBeforeMount(async () => {
       <input type="radio" name="cmp-tab-bar-tabs-regular" id="tab_regular_0" checked>
       <label for="tab_regular_0" role="tab">Funktionszuweisung</label>
       <section id="content_regular_0" role="tabpanel">
-        <TrackConfiguration :tracks="popupSite.tracks"/>
+        <TrackConfiguration/>
       </section>
       <input type="radio" name="cmp-tab-bar-tabs-regular" id="tab_regular_1">
       <label for="tab_regular_1" role="tab">Modellparameter</label>
@@ -40,14 +59,14 @@ onBeforeMount(async () => {
         <ParameterForm></ParameterForm>
       </section>
     </div>
-    <RouterLink
-      to="/visualizer"
+    <button
       class="elm-button"
       data-variant="brand-primary"
       title="Simulieren"
+      @click="simulate()"
     >
       Simulieren
-    </RouterLink>
+    </button>
   </div>
 </template>
 

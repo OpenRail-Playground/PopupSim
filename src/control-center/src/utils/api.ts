@@ -1,8 +1,6 @@
 import { deleteJson, fetchBackend, getJson, postJson, putJson } from './fetch'
 
-/**
- * A quote by an author.
- */
+
 export type PopupSite = {
   name: string
   id: number
@@ -11,8 +9,11 @@ export type PopupSite = {
 
 export type Track = {
   id: string,
-  length: number
+  length: number,
+  function?: Function
 }
+
+export type Function = 'workshop' | 'toBeRetrofitted' | 'retrofitted' | 'parking' | 'stationHead'
 
 export type Topology = {
   popupSites: PopupSite[]
@@ -23,4 +24,19 @@ export type Parameters = {
   shuntingMovement: number,
   movement: number,
   coupling: number,
+}
+
+export type Configuration = {
+  popupSite: number,
+  workshops: string[],
+  retrofitted: string[],
+  toBeRetrofitted: string[],
+  stationHead: string[],
+  parking: string[],
+  parameters: Parameters
+}
+
+export type NewSimulationRequest = {
+  configuration: Configuration,
+  popupSite: PopupSite
 }

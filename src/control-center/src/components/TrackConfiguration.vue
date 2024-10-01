@@ -1,40 +1,26 @@
 <script setup lang="ts">
-import {computed, reactive} from 'vue'
-import type {CoreQuote, PopupSite} from '@/utils/api'
+import {useTopologyStore} from "@/stores/topology";
 
-const props = defineProps<{
-  tracks: Track[]
-}>()
+const {popupSite} = useTopologyStore()
 
-
-const form = reactive<CoreQuote>({
-  title: props.quote?.title || '',
-  author: props.quote?.author || '',
-  body: props.quote?.body || '',
-  notes: props.quote?.notes || ''
-})
-
-
-function submitForm() {
-  emit('submit', form)
-}
 </script>
 
 <template>
   <form>
-    <div class="row" v-for="track of tracks" :key="track.id">
+    <div class="row" v-for="track of popupSite.tracks" :key="track.id">
       <div class="rea-grid" id="tracklist">
         <div class="track"><p><strong>{{ track.id }}</strong>
         </p></div>
         <div class="length"><p>{{ track.length }} Meter</p></div>
         <div>
-          <select class="elm-select function" :name="track.id+'select'" :id="track.id+'select'">
+          <select class="elm-select function" :name="track.id+'select'" :id="track.id+'select'"
+                  v-model="track.function">
             <option></option>
-            <option value="workshops">Workshop</option>
-            <option value="toBeRetrofitted">To be retrofitted</option>
-            <option value="retrofitted">retrofitted</option>
-            <option value="parking">parking</option>
-            <option value="stationHead">station Head</option>
+            <option value="workshop">Werkstatt</option>
+            <option value="toBeRetrofitted">umzubauende Wagen</option>
+            <option value="retrofitted">umgebaute Wagen</option>
+            <option value="parking">parken</option>
+            <option value="stationHead">Bahnhofskopf</option>
           </select>
           <label class="elm-label" for="select">{{ $t('function') }}</label>
 
