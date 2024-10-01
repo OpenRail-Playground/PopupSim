@@ -3,6 +3,7 @@ import { onMounted, Ref, ref, watch } from 'vue'
 import sample_simulation_output from '../../data.json'
 
 var currentStep = 0
+var lastLocomotivePosition = 'unknown'  // Default initial position
 
 // The important part: the name of the variable needs to be equal to the ref's name of the canvas element in the template
 const canvasElement: Ref<HTMLCanvasElement | undefined> = ref()
@@ -50,48 +51,66 @@ function render() {
 
   //all images are 128x128
 
-  //draw locomotive
-  switch (sample_simulation_output[currentStep].locomotive.position) {
+  // Get locomotive track position
+  const locomotiveTrack = sample_simulation_output[currentStep].locomotive.position
+  let locomotiveX = 340
+  let locomotiveY = 270
+
+  switch (locomotiveTrack) {
     case 'kopf':
-      drawImage(ctx, 'steam-locomotive.png', 68, 270)
+      locomotiveX = 68
+      locomotiveY = 270
       break
     case 'toBeRetrofitted':
-      drawImage(ctx, 'steam-locomotive.png', 633, 40)
+      locomotiveX = 633
+      locomotiveY = 37
       break
     case 'WorkshopGleis1':
-      drawImage(ctx, 'steam-locomotive.png', 693, 533)
+      locomotiveX = 633
+      locomotiveY = 270
       break
     case 'WorkshopGleis2':
-      drawImage(ctx, 'steam-locomotive.png', 790, 750)
+      locomotiveX = 633
+      locomotiveY = 750
       break
     case 'retrofited':
-      drawImage(ctx, 'steam-locomotive.png', 515, 289)
+      locomotiveX = 633
+      locomotiveY = 289
       break
   }
 
-  //draw all wagons
-  drawWagons(ctx, sample_simulation_output[currentStep].tracks.toBeRetrofitted, 754, 38)
-  drawWagons(ctx, sample_simulation_output[currentStep].tracks.retrofitted, 900, 740)
+
+  // Draw locomotive at the specified position
+  drawImage(ctx, 'steam-locomotive.png', locomotiveX, locomotiveY)
+
+  //draw all wagons with appropriate colors
+  drawWagons(ctx, sample_simulation_output[currentStep].tracks.toBeRetrofitted, 760, 38, 'blue')
+  drawWagons(ctx, sample_simulation_output[currentStep].tracks.retrofitted, 900, 740, 'green')
 
   // Differentiate between workshop tracks
-  sample_simulation_output[currentStep].tracks.workshopGleise.forEach(
-    (workshopGleis, workshopIndex) => {
-      Object.keys(workshopGleis).forEach((key) => {
-        let yPosition = workshopIndex === 0 ? 278 : 503 // Differentiate y-position for WorkshopGleis1 and WorkshopGleis2
-        drawWagons(ctx, workshopGleis[key], 760, yPosition)
-      })
-    }
-  )
+  sample_simulation_output[currentStep].tracks.workshopGleise.forEach((workshopGleis, workshopIndex) => {
+    Object.keys(workshopGleis).forEach((key) => {
+      let yPosition = workshopIndex === 0 ? 278 : 503; // Differentiate y-position for WorkshopGleis1 and WorkshopGleis2
+      drawWagons(ctx, workshopGleis[key], 760, yPosition, 'yellow')
+    })
+  })
 }
 
-function drawWagons(ctx, wagons, startX, startY) {
+function drawWagons(ctx, wagons, startX, startY, defaultColor) {
   wagons.slice(0, 3).forEach((wagon, index) => {
+    const color = wagon.couplerType === 'dac' ? 'green' : defaultColor
+    drawColoredRect(ctx, startX + index * 128, startY, color)
     drawImage(ctx, 'vagon.png', startX + index * 128, startY)
   })
 
   if (wagons.length > 3) {
     drawText(ctx, `+${wagons.length - 3}`, startX + 3 * 128, startY + 60)
   }
+}
+
+function drawColoredRect(ctx, x, y, color) {
+  ctx.fillStyle = color
+  ctx.fillRect(x, y, 128, 128) // Size of the rectangle
 }
 
 function drawImage(ctx, image, x, y) {
@@ -104,19 +123,19 @@ function drawImage(ctx, image, x, y) {
 
 function drawText(ctx, text, x, y) {
   ctx.fillStyle = 'black'
-  ctx.font = '20px Arial'
+  ctx.font = '30px Arial'
   ctx.fillText(text, x, y)
 }
 </script>
 
 <template>
-  <input
-    type="range"
-    min="0"
-    :max="sample_simulation_output.length - 1"
-    v-model="sliderValue"
-    style="width: 500px"
-    ref="slider"
+  <input 
+    type="range" 
+    min="0" 
+    :max="sample_simulation_output.length - 1" 
+    v-model="sliderValue" 
+    style="width: 500px" 
+    ref="slider" 
   />
   <canvas ref="canvasElement" width="1920" height="1080" />
 </template>
