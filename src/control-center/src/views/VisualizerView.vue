@@ -9,7 +9,7 @@ const simulationStore = useSimulationStore()
 // Maybe use the sample output instead if loading is incomplete?
 const { simulation, isSimulationRequested, isSimulationFinished } = storeToRefs(simulationStore)
 var currentStep = 0
-var lastLocomotivePosition = 'unknown'  // Default initial position
+var lastLocomotivePosition = 'unknown' // Default initial position
 
 // The important part: the name of the variable needs to be equal to the ref's name of the canvas element in the template
 const canvasElement: Ref<HTMLCanvasElement | undefined> = ref()
@@ -47,12 +47,11 @@ function render() {
   ctx.fillRect(0, 0, canvasElement.value!.width, canvasElement.value!.height)
 
   //draw background
-  var base_image = new Image()
-  base_image.src = 'http://localhost:8080/src/assets/rail_icons/edited.png'
-  base_image.onload = function () {
-    ctx.drawImage(this, 0, 0)
+  var baseImage = new Image()
+  baseImage.src = 'rail_icons/edited.png'
+  baseImage.onload = function () {
+    ctx.drawImage(baseImage, 0, 0)
   }
-
   //setup slider
 
   //all images are 128x128
@@ -85,7 +84,6 @@ function render() {
       break
   }
 
-
   // Draw locomotive at the specified position
   drawImage(ctx, 'steam-locomotive.png', locomotiveX, locomotiveY)
 
@@ -94,12 +92,14 @@ function render() {
   drawWagons(ctx, sample_simulation_output[currentStep].tracks.retrofitted, 900, 740, 'green')
 
   // Differentiate between workshop tracks
-  sample_simulation_output[currentStep].tracks.workshopGleise.forEach((workshopGleis, workshopIndex) => {
-    Object.keys(workshopGleis).forEach((key) => {
-      let yPosition = workshopIndex === 0 ? 278 : 503; // Differentiate y-position for WorkshopGleis1 and WorkshopGleis2
-      drawWagons(ctx, workshopGleis[key], 760, yPosition, 'yellow')
-    })
-  })
+  sample_simulation_output[currentStep].tracks.workshopGleise.forEach(
+    (workshopGleis, workshopIndex) => {
+      Object.keys(workshopGleis).forEach((key) => {
+        let yPosition = workshopIndex === 0 ? 278 : 503 // Differentiate y-position for WorkshopGleis1 and WorkshopGleis2
+        drawWagons(ctx, workshopGleis[key], 760, yPosition, 'yellow')
+      })
+    }
+  )
 }
 
 function drawWagons(ctx, wagons, startX, startY, defaultColor) {
@@ -119,10 +119,10 @@ function drawColoredRect(ctx, x, y, color) {
   ctx.fillRect(x, y, 128, 128) // Size of the rectangle
 }
 
-function drawImage(ctx, image, x, y) {
-  var base_image = new Image()
-  base_image.src = 'http://localhost:8080/src/assets/rail_icons/' + image
-  base_image.onload = function () {
+function drawImage(ctx, name, x, y) {
+  const image = new Image()
+  image.src = `/rail_icons/${name}`
+  image.onload = function () {
     ctx.drawImage(this, x, y)
   }
 }

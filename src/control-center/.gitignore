@@ -38,5 +38,3 @@ results.xml
 # Lightouse CI
 .history
 .lighthouseci
-
-package-lock.json
