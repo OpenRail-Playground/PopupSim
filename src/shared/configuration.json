@@ -28,7 +28,8 @@
       "workshop": 180,
       "shuntingMovement": 8,
       "movement": 5,
-      "coupling": 8
+      "coupling": 8,
+      "wagonsPerWorkshop": 3
     }
   }
 }
