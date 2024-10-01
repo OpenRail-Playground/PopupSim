@@ -13,23 +13,16 @@ env: Environment
 error: Error
 errorDetails: The requested page cannot be shown. Please sign in first.
 form:
-  author:
-    error: An author must be specified.
-    placeholder: Author of the quote
-    title: Author
-  body:
-    error: A quote must be entered.
-    title: Quote
-  cancel: Cancel
-  notes:
-    title: Notes
-  save: Save
-  title:
-    error: A title must be provided.
-    placeholder: A title for the following quote
-    title: title
+  workshop:
+    title: workshop
+  shuntingMovement:
+    title: shunting movement
+  movement:
+    title: head movement
+  coupling:
+    title: coupling
 help: Help
-home: Home
+home: Start new simulation
 imprint: Imprint
 info: Info
 loginSuccessText: Login successful
@@ -48,5 +41,6 @@ updateQuote: Edit quote
 user: User
 username: Username
 version: version
+visualizer: Result
 welcome: Welcome to the PopUpSim-ControlCenter.js
 "yes": "Yes"

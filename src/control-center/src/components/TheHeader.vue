@@ -19,8 +19,8 @@ const { locale } = useI18n()
           </RouterLink>
         </li>
         <li>
-          <RouterLink to="/user" class="elm-link" title="Benutzer">
-            {{ $t('user') }}
+          <RouterLink to="/visualizer" class="elm-link" :title="$t('visualizer')">
+            {{ $t('visualizer') }}
           </RouterLink>
         </li>
         <li>
@@ -43,7 +43,7 @@ const { locale } = useI18n()
     <div class="cmp-brand">
       <RouterLink to="/" :title="$t('home')" rel="home">
         <img
-          src="../assets/db_logo.svg"
+          src="../assets/3LH.png"
           alt="Deutsche Bahn Logo"
           width=""
           height=""

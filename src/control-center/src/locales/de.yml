@@ -14,23 +14,16 @@ errorDetails: >-
   Die aufgerufene Seite kann nicht angezeigt werden. Bitte melden Sie sich
   zuerst an.
 form:
-  author:
-    error: Es muss ein(e) Autor(in) angegeben werden.
-    placeholder: Autor(in) des Zitats
-    title: Autor(in)
-  body:
-    error: Es muss ein Zitat eingegeben werden.
-    title: Zitat
-  cancel: Abbrechen
-  notes:
-    title: Notizen
-  save: Speichern
-  title:
-    error: Es muss ein Titel angegeben werden.
-    placeholder: Ein Titel für das nachfolgende Zitat
-    title: Titel
+  workshop:
+    title: Workshop
+  shuntingMovement:
+    title: Sägefahrt
+  movement:
+    title: Kopffahrt
+  coupling:
+    title: Kupplung
 help: Hilfe
-home: Startseite
+home: Neue Simulation konfigurieren
 imprint: Impressum
 info: Info
 loginSuccessText: >-
@@ -52,5 +45,6 @@ updateQuote: Zitat bearbeiten
 user: Benutzer
 username: Benutzername
 version: Version
+visualizer: Ergebnis
 welcome: Willkommen bei der PopUpSim-ControlCenter.js
 "yes": Ja
