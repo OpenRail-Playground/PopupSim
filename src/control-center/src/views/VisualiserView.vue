@@ -70,25 +70,28 @@ function render() {
   }
 
   //draw all wagons
-  sample_simulation_output[currentStep].tracks.toBeRetrofitted.forEach((toBeRetrofitted, index) => {
-    drawImage(ctx, 'vagon.png', 5 + index * 128 + 754, 38)
-  })
+  drawWagons(ctx, sample_simulation_output[currentStep].tracks.toBeRetrofitted, 754, 38)
+  drawWagons(ctx, sample_simulation_output[currentStep].tracks.retrofitted, 900, 740)
 
-  sample_simulation_output[currentStep].tracks.retrofitted.forEach((retrofitted, index) => {
-    drawImage(ctx, 'vagon.png', 5 + index * 128 + 900, 740)
-  })
-
-
-
- // Differentiate between workshop tracks
- sample_simulation_output[currentStep].tracks.workshopGleise.forEach((workshopGleis, workshopIndex) => {
-    Object.keys(workshopGleis).forEach((key) => {
-      workshopGleis[key].forEach((wagon, wagonIndex) => {
-        let yPosition = workshopIndex === 0 ? 278 : 503; // Differentiate y-position for WorkshopGleis1 and WorkshopGleis2
-        drawImage(ctx, 'vagon.png', 5 + wagonIndex * 128 + 540, yPosition)
+  // Differentiate between workshop tracks
+  sample_simulation_output[currentStep].tracks.workshopGleise.forEach(
+    (workshopGleis, workshopIndex) => {
+      Object.keys(workshopGleis).forEach((key) => {
+        let yPosition = workshopIndex === 0 ? 278 : 503 // Differentiate y-position for WorkshopGleis1 and WorkshopGleis2
+        drawWagons(ctx, workshopGleis[key], 760, yPosition)
       })
-    })
+    }
+  )
+}
+
+function drawWagons(ctx, wagons, startX, startY) {
+  wagons.slice(0, 3).forEach((wagon, index) => {
+    drawImage(ctx, 'vagon.png', startX + index * 128, startY)
   })
+
+  if (wagons.length > 3) {
+    drawText(ctx, `+${wagons.length - 3}`, startX + 3 * 128, startY + 60)
+  }
 }
 
 function drawImage(ctx, image, x, y) {
@@ -98,16 +101,22 @@ function drawImage(ctx, image, x, y) {
     ctx.drawImage(this, x, y)
   }
 }
+
+function drawText(ctx, text, x, y) {
+  ctx.fillStyle = 'black'
+  ctx.font = '20px Arial'
+  ctx.fillText(text, x, y)
+}
 </script>
 
 <template>
-  <input 
-    type="range" 
-    min="0" 
-    :max="sample_simulation_output.length - 1" 
-    v-model="sliderValue" 
-    style="width: 500px" 
-    ref="slider" 
+  <input
+    type="range"
+    min="0"
+    :max="sample_simulation_output.length - 1"
+    v-model="sliderValue"
+    style="width: 500px"
+    ref="slider"
   />
   <canvas ref="canvasElement" width="1920" height="1080" />
 </template>
