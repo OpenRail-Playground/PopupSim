@@ -11,7 +11,6 @@ const {parameters} = useParametersStore()
 
 <template>
   <form>
-    <div class="row">
       <div>
         <AppInput
           :title="$t('form.workshop.title')"
@@ -52,19 +51,17 @@ const {parameters} = useParametersStore()
           {{ $t('form.coupling.error') }}
         </AppInput>
       </div>
-    </div>
   </form>
 </template>
 
 <style lang="scss" scoped>
-form .row {
-  margin-top: 0.5rem;
-  display: flex;
-  gap: 0.5rem;
-
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
   > div {
-    flex-grow: 1;
-    width: 100%;
+
   }
 }
 </style>

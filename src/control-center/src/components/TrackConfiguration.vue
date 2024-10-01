@@ -23,11 +23,12 @@ function submitForm() {
 <template>
   <form>
     <div class="row" v-for="track of tracks" :key="track.id">
-      <div class="rea-grid">
-        <div><p> {{ track.id }} ({{track.length}} Meter)
+      <div class="rea-grid" id="tracklist">
+        <div class="track"><p><strong>{{ track.id }}</strong>
         </p></div>
+        <div class="length"><p>{{ track.length }} Meter</p></div>
         <div>
-          <select class="elm-select " name="select" id="select">
+          <select class="elm-select function" :name="track.id+'select'" :id="track.id+'select'">
             <option></option>
             <option value="workshops">Workshop</option>
             <option value="toBeRetrofitted">To be retrofitted</option>
@@ -35,6 +36,8 @@ function submitForm() {
             <option value="parking">parking</option>
             <option value="stationHead">station Head</option>
           </select>
+          <label class="elm-label" for="select">{{ $t('function') }}</label>
+
         </div>
       </div>
     </div>
@@ -43,13 +46,29 @@ function submitForm() {
 
 <style lang="scss" scoped>
 form .row {
-  margin-top: 0.5rem;
   display: flex;
-  gap: 0.5rem;
 
   > div {
     flex-grow: 1;
     width: 100%;
   }
+}
+
+#tracklist {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 2fr;
+  line-height: 1;
+}
+
+.function {
+  min-width: 200px;
+}
+
+.track {
+  min-width: 100px;
+}
+
+.length {
+  white-space: nowrap;
 }
 </style>

@@ -10,3 +10,19 @@ a.elm-button {
   display: flex;
   gap: 0.5rem;
 }
+
+.rea-main {
+
+  @media screen and (min-width: 1088px) {
+    max-width: calc(100vw - 32px);
+    width: calc(100vw - 32px);
+  }
+  @media screen and (min-width: 1280px) {
+    max-width: calc(100vw - 32px);
+    width: calc(100vw - 32px);
+  }
+  @media screen and (min-width: 1472px) {
+    max-width: calc(100vw - 32px);
+    width: calc(100vw - 32px);
+  }
+}

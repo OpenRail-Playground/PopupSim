@@ -15,15 +15,17 @@ errorDetails: >-
   zuerst an.
 form:
   workshop:
-    title: Workshop
+    title: Workshop (in Minuten)
   shuntingMovement:
-    title: Sägefahrt
+    title: Sägefahrt (in Minuten)
   movement:
-    title: Kopffahrt
+    title: Kopffahrt (in Minuten)
   coupling:
-    title: Kupplung
+    title: Kupplung (in Minuten)
 help: Hilfe
-home: Neue Simulation konfigurieren
+home: Simulator konfigurieren
+popupSite: Pop-up-Site
+function: Funktion
 imprint: Impressum
 info: Info
 loginSuccessText: >-
