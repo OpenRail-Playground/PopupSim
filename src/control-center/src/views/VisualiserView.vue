@@ -10,13 +10,6 @@ const env = import.meta.env
 var loadedJson = ''
 
 onMounted(() => {
-  fetch(`sample_simulation_output.json`)
-    .then((response) => response.text())
-    .then((res) => {
-      loadedJson = res
-      console.log(sample_simulation_output)
-    })
-
   // Get canvas context. If 'getContext' returns 'null', set to 'undefined', so that it conforms to the Ref typing
   context.value = canvasElement.value?.getContext('2d') || undefined
   render()
@@ -26,25 +19,23 @@ function render() {
   if (!context.value) {
     return
   }
+  console.log('render')
 
   var ctx = context.value
+  ctx.canvas.width = window.innerWidth
+  ctx.canvas.height = window.innerHeight
 
-  // Define a new path
-  ctx.beginPath()
+  ctx.fillStyle = '#f3f4ff'
+  ctx.fillRect(0, 0, canvasElement.value!.width, canvasElement.value!.height)
 
-  // Set a start-point
-  ctx.moveTo(0, 0)
-
-  // Set an end-point
-  ctx.lineTo(200, 100)
-
-  // Stroke it (Do the Drawing)
-  ctx.stroke()
-
-  ctx.roundRect(35, 10, 225, 110, 20) //or .fill() for a filled rect
+  var base_image = new Image()
+  base_image.src = 'http://localhost:8080/src/assets/rail_icons/edited.svg'
+  base_image.onload = function () {
+    ctx.drawImage(base_image, 0, 0)
+  }
 }
 </script>
 
 <template>
-  <canvas ref="canvasElement" width="200" height="200" />
+  <canvas ref="canvasElement" width="1920" height="1080" />
 </template>
