@@ -4,7 +4,7 @@ import { useTopologyStore } from '@/stores/topology'
 import TrackConfiguration from '@/components/TrackConfiguration.vue'
 import { storeToRefs } from 'pinia'
 import ParameterForm from '@/components/ParameterForm.vue'
-import type { NewSimulationRequest, PopupSite } from '@/utils/api'
+import type { NewSimulationRequest, Function, Track } from '@/utils/api'
 import { useParametersStore } from '@/stores/parameters'
 import { useSimulationStore } from '@/stores/simulation'
 import router from '@/router'
@@ -20,7 +20,7 @@ onBeforeMount(async () => {
 })
 
 function simulate() {
-  function findTracksOfFunction(functionAssignment: Function): Track[] {
+  function findTracksOfFunction(functionAssignment: Function): string[] {
     return popupSite.value.tracks.filter((t) => t.function === functionAssignment).map((t) => t.id)
   }
   const requestBody: NewSimulationRequest = {

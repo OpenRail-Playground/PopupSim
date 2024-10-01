@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-
-const env = import.meta.env
 let licensesTxt = ref<string>()
 
 onMounted(async () => {
-  fetch(`${env.BASE_URL}dependencies.txt`)
+  fetch(`/dependencies.txt`)
     .then((response) => response.text())
     .then((res) => {
       licensesTxt.value = res
@@ -41,7 +39,6 @@ onMounted(async () => {
 
     <h2>{{ $t('technicalInformation') }}</h2>
     <p>{{ $t('version') }} 1.1.0</p>
-    <p>{{ $t('env') }}: {{ env.MODE }}</p>
 
     <!-- <ul>
       <li v-for="(value, key) in env" :key="key">{{ key }}: {{ value }}</li>

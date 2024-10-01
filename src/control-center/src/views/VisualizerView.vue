@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, Ref, ref, watch } from 'vue'
+import { onMounted, type Ref, ref, watch } from 'vue'
 import sample_simulation_output from '../../data.json'
 import { useSimulationStore } from '@/stores/simulation'
 import { storeToRefs } from 'pinia'
@@ -16,7 +16,6 @@ const canvasElement: Ref<HTMLCanvasElement | undefined> = ref()
 const context: Ref<CanvasRenderingContext2D | undefined> = ref()
 const slider: Ref<HTMLInputElement | undefined> = ref()
 
-const env = import.meta.env
 var loadedJson = ''
 
 const sliderValue = ref(0)

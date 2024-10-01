@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { PopupSite, Topology } from '@/utils/api'
-import topologyFile from '../assets/topology.yaml?url'
 import { parse } from 'yaml'
 
 export const useTopologyStore = defineStore('topology', () => {
@@ -18,7 +17,7 @@ export const useTopologyStore = defineStore('topology', () => {
 
   async function loadTopology() {
     if (!topology.value) {
-      const fileContent = await fetch(topologyFile)
+      const fileContent = await fetch('/topology.yaml')
       topology.value = parse(await fileContent.text())
       popupSite.value = topology.value.popupSites[0]
     }

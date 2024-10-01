@@ -24,7 +24,7 @@ export default defineConfig({
       sourcemap: true,
       thirdParty: {
         output: {
-          file: path.join(__dirname, 'dist', 'dependencies.txt')
+          file: path.join(__dirname, 'dist/public', 'dependencies.txt')
         },
         allow: {
           // allowlist / denylist can be setup here
@@ -32,7 +32,8 @@ export default defineConfig({
           test: (dependency) => {
             return (
               !!dependency.license &&
-              (dependency.name === 'pop-up-sim-cc' || ['MIT', 'Apache-2.0'].includes(dependency.license))
+              (dependency.name === 'pop-up-sim-cc' ||
+                ['MIT', 'Apache-2.0'].includes(dependency.license))
             )
           },
           failOnUnlicensed: true, // Fail if a dependency does not specify any licenses, default is `false`
