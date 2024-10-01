@@ -36,28 +36,70 @@ DRIVE_TIMES = {
 
 }
 
+class globalLogger():
+  pass
+
+class track(object):
+
+  def __init__(self, name):
+     self.name = name
+     self.wagons = []
+
+  def log(self):
+     return {
+        self.name: self.wagons
+     }
+  
+class globalSetting(object):
+   
+   env = simpy.Environment()
+  loc = locomotive(env)
+  env.run()
+    
+
 class waggon(object):
     
-    
-    def __init__(self, id, env):
+    def __init__(self, id, length, couplerType, env):
         
-        self.status = "waiting"
         self.id = id
-    
+        self.length = length
+        self.couplerType = couplerType
+
+    def log(self):
+     return {
+        "wagonId": self.id,
+        "length": self.length,
+        "couplerType": self.couplerType
+     }
+
 
 
 class locomotive(object):
-    def __init__(self, env):
+    def __init__(self, env, id=1, ):
         self.env = env
+
+        self.id = id
+        self.coupled_with = []
+        self.position = "kopf"
+
         # Start the run process everytime an instance is created.
         self.action = env.process(self.run())
+
+    def log(self):
+      return {
+          "lokomotive": {
+            "lokomotiveId": self.id,
+            "coupledWith:": self.coupled_with,
+          "position": self.position,
+        }
+      }
 
     def run(self):
         print('Starting in Kopf %d' % self.env.now)
 
         # drive to b1
         
-        yield self.env.process(self.drive("kopf", "b1"))
+        yield self.env.process(self.drive_to("b1"))
        
 
 
@@ -66,7 +108,7 @@ class locomotive(object):
 
         # drive to C
         
-        yield self.env.process(self.drive("b1", "c"))
+        yield self.env.process(self.drive_to("b1", "c"))
         
 
         # uncoupling
@@ -76,7 +118,7 @@ class locomotive(object):
 
         # drive to from C to a
         
-        yield self.env.process(self.drive("c", "a"))
+        yield self.env.process(self.drive_to("c", "a"))
         
 
         # coupling
@@ -84,7 +126,7 @@ class locomotive(object):
 
         # drive from a to b1
         
-        yield self.env.process(self.drive("a", "b1"))
+        yield self.env.process(self.drive_to("a", "b1"))
         
 
         # uncoupling
@@ -92,7 +134,7 @@ class locomotive(object):
 
         # drive from b1 to kopf
         
-        yield self.env.process(self.drive("b1", "kopf"))
+        yield self.env.process(self.drive_to("b1", "kopf"))
        
 
         print('finished %d' % self.env.now)
@@ -108,14 +150,15 @@ class locomotive(object):
         yield self.env.timeout(duration)
         print('finished uncoupling %d' % self.env.now)
     
-    def drive(self, start, end):
-        print(f"start driving from {start} to {end} - {self.env.now}")
+    def drive_to(self, target):
+        print(f"start driving from {self.position} to {target} - {self.env.now}")
   
         # compute driving time
-        driving_time = DRIVE_TIMES[start][end]
+        driving_time = DRIVE_TIMES[self.position][target]
         yield self.env.timeout(driving_time)
   
-        print(f"arrived {end} - {self.env.now}")
+        print(f"arrived {target} - {self.env.now}")
+        log_change(locomove, waggon1, waggon2, ...)
 # %%
 
 env = simpy.Environment()
