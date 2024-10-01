@@ -4,9 +4,10 @@
 
 ## ToDos
 - [x] Sort tracks based on relative location (done manually in input file)
-- [ ] Adapt UI to visual design
-- [ ] Generate configuration.json on the fly
-- [ ] Call API 
+- [x] Adapt UI to visual design
+- [x] Generate configuration.json on the fly
+- [ ] Call API and store response
+- [ ] Add number of waggons per workshop
 - [ ] route to visualizer
 - [ ] Deploy frontend to GitHub Pages
 - [ ] Save config in local storage
