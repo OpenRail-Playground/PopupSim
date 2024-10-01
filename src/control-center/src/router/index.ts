@@ -6,7 +6,7 @@ import { useAuthStore } from '../stores/auth'
 import ErrorView from '../views/ErrorView.vue'
 import HelpView from '../views/HelpView.vue'
 import HomeView from '../views/HomeView.vue'
-import ImprintView from '../views/ImprintView.vue'
+import VisualiserView from '../views/VisualiserView.vue'
 
 const baseTitle = `PopUpSim-ControlCenter.js`
 
@@ -22,10 +22,10 @@ const router = createRouter({
       meta: { i18nKey: 'home' }
     },
     {
-      path: '/imprint',
-      name: 'imprint',
-      component: ImprintView,
-      meta: { i18nKey: 'imprint' }
+      path: '/visualiser',
+      name: 'visualiser',
+      component: VisualiserView,
+      meta: { i18nKey: 'visualiser' }
     },
     {
       path: '/help',
