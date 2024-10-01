@@ -1,0 +1,25 @@
+configuration:
+  popupSite: 1
+  workshops:
+    - "z1"
+    - "10"
+  retrofitted:
+    - "7"
+  toBeRetrofitted:
+    - "6"
+  stationHead:
+    - "1A"
+  parking:
+    - "8"
+    - "9"
+    - "17"
+    - "18"
+    - "19"
+    - "22"
+    - "23"
+    - "24"
+  parameters:
+    workshop: 180
+    shuntingMovement: 8
+    movement: 5
+    couplingTime: 8
