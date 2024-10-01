@@ -28,7 +28,7 @@
       "workshop": 180,
       "shuntingMovement": 8,
       "movement": 5,
-      "couplingTime": 8
+      "coupling": 8
     }
   }
 }
