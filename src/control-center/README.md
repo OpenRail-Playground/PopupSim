@@ -23,12 +23,11 @@ All architectural decisions are documented in the [docs/adr/](./docs/adr) direct
 
 The source code follows the [Vue Styleguide](https://vuejs.org/style-guide/) as well as general best practices.
 We aim to have an evergreen environment with up-to-date package versions and a general compliant setup.
-Therefore, [Renovate](https://db.de/renovate) is used to automate dependency and compliant pipeline updates.
 
 ### Accessibility
 
 This project contains essential tools to keep your app accessible by ensuring the [WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/) are satisfied.
-Further documentation related to accessibility and the implementation in web applications can be found in the [buildIT devEx documentation for accessibility](https://build-it.gitpages.tech.rz.db.de/products/devex-barrierefreiheit/docs/04_Testautomation.html).
+
 
 #### VSCode extension
 
@@ -50,8 +49,6 @@ check the current displayed site in Playwright for accessibility violations.
 Sites to be tested should be explicitly added to the configuration file `.pa11yci`.
 The tests are executed in the CI/CD pipeline against the AT (automatic test) environment as well.
 Pa11y supports also handing over URLs as parameters or by scanning a `sitemap.xml`.
-Please refer to the implementation and [documentation from the provided pa11y-ci job](https://git.tech.rz.db.de/testautomation/pipeship/jobs/pa11y)
-of the test automation team.
 
 ## How to start?
 
@@ -71,11 +68,6 @@ Build the application for (production mode):
 npm build
 ```
 
-Build the docker image and serve the app (using the [Nginx SPA Image](https://git.tech.rz.db.de/db-inner-source/tt-web/webserver/nginx-spa)):
-
-```bash
-docker build -t pop-up-sim-cc . && docker run -p 8080:8080 pop-up-sim-cc
-```
 
 ## Code Analysis & Quality Assurance
 
@@ -91,8 +83,6 @@ npm run lint
 
 While not the sole focus, [Lighthouse](https://developer.chrome.com/docs/lighthouse) also provides accessibility test results for a list of URLs (see [lighthouserc.cjs](lighthouserc.cjs)).
 
-Lighthouse will be run in CI for each commit and results can be viewed via the [Lighthouse CI server](https://lighthouse.dxc-test.comp.db.de/app/projects/168462/dashboard).
-
 During development one can also run Lighthouse locally.
 Accessibility and other violations against defined thresholds will be shown in the results.
 
@@ -101,13 +91,6 @@ npm run lhci
 ```
 
 If you do not want to use a third party Lighthouse CI server to collect results remotely, remove the `test_lighthouse_ci` include and configuration from [.gitlab-ci.yml](.gitlab-ci.yml).
-
-### Static Code Analysis
-
-This repo uses SonarQube for static code analysis.
-A blueprint for the SonarQube-Server setup can be found in the [TT-inner-source space](https://git.tech.rz.db.de/db-inner-source/helm/sonarqube).
-
-* [Generated Reports](https://sonar-db-inner-source.apps.dbcs-riga.comp.db.de/projects?search=pop-up-sim-cc)
 
 ## Testing
 

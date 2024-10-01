@@ -1,7 +1,7 @@
 {
   "name": "pop-up-sim-cc",
   "version": "0.0.0",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "Apache-2.0",
   "engines": {
     "node": ">=20",
     "npm": ">=10.0.0"

@@ -30,10 +30,6 @@ module.exports = {
         startServerCommand: 'npm run build && npm run preview',
         numberOfRuns: 1
       })
-    },
-    upload: {
-      target: 'lhci',
-      serverBaseUrl: 'https://lighthouse.dxc-test.comp.db.de/'
     }
   }
 }

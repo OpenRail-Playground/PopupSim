@@ -9,7 +9,7 @@ const isAuthenticated = toRef(authStore, 'isAuthenticated')
 <template>
   <div>
     <h1 class="elm-headline">
-      {{ $t('welcome') }}
+      Neue Simulation konfigurieren
     </h1>
     <RouterLink
       to="/user"
