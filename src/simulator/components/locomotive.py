@@ -1,32 +1,13 @@
-DRIVE_TIMES = {
-    "toBeRetrofitted": {
-        "WorkshopGleis0": 5,
-        "WorkshopGleis1": 5,
-        "retrofitted": 10,
-        "kopf": 5,
-    },
-    "WorkshopGleis0": {"toBeRetrofitted": 5, "retrofitted": 10, "kopf": 5},
-    "WorkshopGleis1": {"toBeRetrofitted": 5, "retrofitted": 10, "kopf": 5},
-    "retrofitted": {
-        "toBeRetrofitted": 10,
-        "WorkshopGleis0": 5,
-        "WorkshopGleis1": 5,
-        "kopf": 5,
-    },
-    "kopf": {
-        "toBeRetrofitted": 5,
-        "WorkshopGleis0": 5,
-        "WorkshopGleis1": 5,
-        "retrofitted": 10,
-        "kopf": 5,
-    },
-}
+import itertools
+
+from simulator.config import Config
 
 
 class Locomotive(object):
-    def __init__(self, env, global_setting, start_track, id=1):
+    def __init__(self, env, global_setting, start_track, conf: Config, id: int = 1):
         self.env = env
         self.global_setting = global_setting
+        self.conf = conf
 
         self.id = id
         self.coupled_with = []
@@ -44,14 +25,13 @@ class Locomotive(object):
 
     def run(self):
 
-        # yield self.env.process(self.run_routine(self.global_setting.tracks.workshop_tracks[0]))
         self.env.process(
             self.global_setting.tracks.workshop_tracks[1].change_coupling_system()
         )
-        while (
-            self.global_setting.tracks.toBeRetrofitted.wagons
-            + self.global_setting.tracks.workshop_tracks[0].wagons
-            + self.global_setting.tracks.workshop_tracks[1].wagons
+        while self.global_setting.tracks.toBeRetrofitted.wagons + list(
+            itertools.chain.from_iterable(
+                [track.wagons for track in self.global_setting.tracks.workshop_tracks]
+            )
         ):
 
             available_workshop = self.global_setting.get_available_workshop()
@@ -60,15 +40,7 @@ class Locomotive(object):
                 self.env.process(available_workshop.change_coupling_system())
             else:
                 print("waiting")
-                yield self.env.timeout(5)
-            # wait for workshop to finish
-            # with self.global_setting.workshop_2.request() as req:
-            #     yield req
-            #     yield self.env.process(self.run_routine(self.global_setting.tracks.workshop_tracks[2]))
-
-            # with self.global_setting.workshop_1.request() as req:
-            #     yield req
-            #     yield self.env.process(self.run_routine(self.global_setting.tracks.workshop_tracks[0]))
+                yield self.env.timeout(self.conf.loco_wait_time)
 
     def run_routine(self, workshop_track):
 
@@ -129,7 +101,11 @@ class Locomotive(object):
         )
 
         # compute driving time
-        driving_time = DRIVE_TIMES[self.cur_track.name][target_track.name]
+        driving_time = (
+            self.conf.movement_time
+            if "kopf" in [self.cur_track.name, target_track.name]
+            else self.conf.shunting_time
+        )
         yield self.env.timeout(driving_time)
 
         for wagon in self.coupled_with:

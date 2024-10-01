@@ -5,43 +5,43 @@ import simpy
 from simulator.components.locomotive import Locomotive
 from simulator.components.track_collection import TrackCollection
 from simulator.components.wagon import Wagon
-
-# from simulator.config import Config
+from simulator.config import Config
 
 
 class GlobalSetting(object):
 
-    def __init__(self):
-
+    def __init__(self, conf: Config):
         self.env = simpy.Environment()
-        # self.conf = conf
-
+        self.conf = conf
         self.global_log = []
 
         self.setup_scenario()
-
         self.env.run(until=1500)
-
         self.save_log_json()
 
     def setup_scenario(self):
-        self.tracks = TrackCollection(self.env)
+        self.tracks = TrackCollection(self.env, self.conf)
 
         # create wagons
         self.wagons = []
-        for i in range(20):
+        for i in range(self.conf.number_of_wagons):
             self.wagons.append(Wagon(self.env, i))
 
-        for i in range(3):
+        for i in range(self.conf.workshop_size):
             self.wagons[i].couplerType = "dac"
 
         # add wagons to tracks
-        self.tracks.workshop_tracks[0].wagons = self.wagons[:3]
-        self.tracks.workshop_tracks[1].wagons = self.wagons[3:6]
-        self.tracks.toBeRetrofitted.wagons = self.wagons[6:]
+        for i in range(self.conf.number_of_workshops):
+            self.tracks.workshop_tracks[i].wagons = self.wagons[
+                i * self.conf.workshop_size : (i + 1) * self.conf.workshop_size
+            ]
+            # self.tracks.workshop_tracks[1].wagons = self.wagons[self.conf.workshop_size:self.conf.workshop_size*2]
+        self.tracks.toBeRetrofitted.wagons = self.wagons[
+            self.conf.number_of_workshops * self.conf.workshop_size :
+        ]
 
         # create locomotive
-        self.locomotive = Locomotive(self.env, self, self.tracks.head_track)
+        self.locomotive = Locomotive(self.env, self, self.tracks.head_track, self.conf)
 
     def log_global_state(self):
 
@@ -65,4 +65,4 @@ class GlobalSetting(object):
 
 
 if __name__ == "__main__":
-    GlobalSetting()
+    GlobalSetting(Config())

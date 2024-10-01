@@ -1,3 +1,0 @@
-2024-09-30 23:26:30,398 [PID 17949] INFO No binary specified, looking for `pyre.bin` in PATH
-2024-09-30 23:26:30,398 [PID 17949] INFO Pyre binary is located at `/home/u237427/code/PopupSim/.venv/bin/pyre.bin`
-2024-09-30 23:26:30,399 [PID 17949] ERROR Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.

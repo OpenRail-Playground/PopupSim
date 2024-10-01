@@ -1,3 +1,6 @@
+from simulator.config import Config
+
+
 class _Track:
 
     def __init__(self, env, name):
@@ -15,14 +18,14 @@ class _Track:
 
 
 class _WorkshopTrack(_Track):
-    def __init__(self, env, name):
+    def __init__(self, env, name, changing_time: int):
         self.env = env
         self.name = name
         self.wagons = []
-        self.is_done = False
+        self.changing_time = changing_time
 
     def change_coupling_system(self):
-        yield self.env.timeout(180)
+        yield self.env.timeout(self.changing_time)
         for wagon in self.wagons:
             wagon.couplerType = "dac"
 
@@ -34,12 +37,13 @@ class _WorkshopTrack(_Track):
 
 
 class TrackCollection(_Track):
-    def __init__(self, env) -> None:
+    def __init__(self, env, conf: Config) -> None:
         self.head_track = _Track(env, "kopf")
         self.retrofitted = _Track(env, "retrofitted")
         self.toBeRetrofitted = _Track(env, "toBeRetrofitted")
         self.workshop_tracks = [
-            _WorkshopTrack(env, f"WorkshopGleis{i}") for i in range(2)
+            _WorkshopTrack(env, f"WorkshopGleis{i}", conf.workshop_duration)
+            for i in range(conf.number_of_workshops)
         ]
 
     def log(self):
