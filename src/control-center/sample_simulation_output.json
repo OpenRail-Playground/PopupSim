@@ -8,7 +8,7 @@
   },
   "events": [
     {
-      "timestamp": "iso datetime", 
+      "timestamp": "iso datetime",
       "retrofitted": [
         {
           "wagonId": "Wagon1",
@@ -90,7 +90,7 @@
       "lokomotive": {
         "lokomotiveId": "Lok1",
         "coupledWith:": ["Wagon10", "Wagon11", "Wagon12"],
-        "position": "WorkshopGleis2",
+        "position": "retrofitted",
         "target": "retrofitted"
       }
     }
