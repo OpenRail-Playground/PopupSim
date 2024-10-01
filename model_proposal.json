@@ -12,35 +12,35 @@ dac=DAK-Kupplung
   "retrofitted": [
     {
       "wagonId": "Wagon1",
-      "lenght,": 20,
-      "kupplungsArt": "dac"
+      "length,": 20,
+      "couplerType0": "dac"
     },
     {
       "wagonId": "Wagon2",
-      "lenght,": 20,
-      "kupplungsArt": "dac"
+      "length,": 20,
+      "couplerType": "dac"
     },
     {
       "wagonId": "Wagon3",
-      "lenght,": 20,
-      "kupplungsArt": "dac"
+      "length,": 20,
+      "couplerType": "dac"
     }
   ],
   "toBeRetrofitted": [
     {
       "wagonId": "Wagon4",
-      "lenght,": 20,
-      "kupplungsArt": "sc"
+      "length,": 20,
+      "couplerType": "sc"
     },
     {
       "wagonId": "Wagon5",
-      "lenght,": 20,
-      "kupplungsArt": "sc"
+      "length,": 20,
+      "couplerType": "sc"
     },
     {
       "wagonId": "Wagon6",
-      "lenght,": 20,
-      "kupplungsArt": "sc"
+      "length,": 20,
+      "couplerType": "sc"
     }
   ],
   "workshopGleise": [
@@ -50,18 +50,18 @@ dac=DAK-Kupplung
       "wagons": [
         {
           "wagonId": "Wagon7",
-          "lenght,": 20,
-          "kupplungsArt": "sc"
+          "length,": 20,
+          "couplerType": "sc"
         },
         {
           "wagonId": "Wagon8",
-          "lenght,": 20,
-          "kupplungsArt": "sc"
+          "length,": 20,
+          "couplerType": "sc"
         },
         {
           "wagonId": "Wagon9",
-          "lenght,": 20,
-          "kupplungsArt": "sc"
+          "length,": 20,
+          "couplerType": "sc"
         }
       ]
     },
@@ -71,18 +71,18 @@ dac=DAK-Kupplung
       "wagons": [
         {
           "wagonId": "Wagon10",
-          "lenght,": 20,
-          "kupplungsArt": "dac"
+          "length,": 20,
+          "couplerType": "dac"
         },
         {
           "wagonId": "Wagon11",
-          "lenght,": 20,
-          "kupplungsArt": "dac"
+          "length,": 20,
+          "couplerType": "dac"
         },
         {
           "wagonId": "Wagon12",
-          "lenght,": 20,
-          "kupplungsArt": "dac"
+          "length,": 20,
+          "couplerType": "dac"
         }
       ]
     }
