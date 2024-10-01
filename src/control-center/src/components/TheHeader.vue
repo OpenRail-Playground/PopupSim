@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { useAuthStore } from '../stores/auth'
 import { useI18n } from 'vue-i18n'
-import { storeToRefs } from 'pinia'
 
 const { locale } = useI18n()
-const auth = useAuthStore()
-const { isAuthenticated } = storeToRefs(auth)
 
-const { login, logout } = auth
 </script>
 
 <template>
@@ -15,7 +10,7 @@ const { login, logout } = auth
     <nav class="cmp-mainnavigation" id="mainnavigation">
       <input type="checkbox" id="toggle_mainnavigation" />
       <label for="toggle_mainnavigation" title="Toggle main navigation" class="is-site-name"
-        >PopUpSim-ControlCenter.js</label
+        >PopUpSim - ControlCenter</label
       >
       <ul>
         <li>
@@ -59,32 +54,6 @@ const { login, logout } = auth
       <span class="is-site-name">PopUpSim-ControlCenter.js</span>
     </div>
     <div class="rea-meta">
-      <ul class="cmp-metanavigation">
-        <li>
-          <a
-            v-if="!isAuthenticated"
-            id="login"
-            class="elm-link"
-            :title="$t('signin')"
-            rel="account"
-            href="#"
-            @click="login()"
-          >
-            {{ $t('signin') }}
-          </a>
-          <a
-            v-else
-            id="logout"
-            class="elm-link"
-            :title="$t('signout')"
-            rel="account"
-            href="#"
-            @click="logout()"
-          >
-            {{ $t('signout') }}
-          </a>
-        </li>
-      </ul>
       <ul class="cmp-language-switcher" aria-label="Select the language">
         <li :aria-current="locale === 'en' ? 'page' : undefined">
           <a

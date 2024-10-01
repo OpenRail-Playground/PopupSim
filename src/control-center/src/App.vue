@@ -2,13 +2,7 @@
 import { RouterView } from 'vue-router'
 import TheHeader from '@/components/TheHeader.vue'
 import TheFooter from '@/components/TheFooter.vue'
-import { onMounted } from 'vue'
-import { useAuthStore } from './stores/auth'
 
-onMounted(() => {
-  const auth = useAuthStore()
-  auth.checkAuth()
-})
 </script>
 
 <template>

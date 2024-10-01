@@ -2,7 +2,6 @@ import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import i18n from '../locales'
-import { useAuthStore } from '../stores/auth'
 import ErrorView from '../views/ErrorView.vue'
 import HelpView from '../views/HelpView.vue'
 import HomeView from '../views/HomeView.vue'
@@ -46,36 +45,36 @@ const router = createRouter({
       // this generates a separate chunk (PageOne.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/UserView.vue'),
-      meta: { i18nKey: 'user', requiresAuth: true }
+      meta: { i18nKey: 'user' }
     },
     {
       path: '/demo',
       redirect: { name: 'quotes' },
-      meta: { requiresAuth: true },
+      meta: {},
       children: [
         {
           path: 'quotes',
           name: 'quotes',
           component: () => import('../views/QuotesView.vue'),
-          meta: { i18nKey: 'quotes', requiresAuth: true }
+          meta: { i18nKey: 'quotes'}
         },
         {
           path: 'quotes/show/:slug',
           name: 'quote',
           component: () => import('../views/QuoteView.vue'),
-          meta: { i18nKey: 'quote', requiresAuth: true }
+          meta: { i18nKey: 'quote' }
         },
         {
           path: 'quotes/create',
           name: 'createQuote',
           component: () => import('../views/QuoteCreateView.vue'),
-          meta: { i18nKey: 'createQuote', requiresAuth: true }
+          meta: { i18nKey: 'createQuote'}
         },
         {
           path: 'quotes/edit/:slug',
           name: 'editQuote',
           component: () => import('../views/QuoteEditView.vue'),
-          meta: { i18nKey: 'editQuote', requiresAuth: true }
+          meta: { i18nKey: 'editQuote'}
         }
       ]
     }
@@ -84,22 +83,6 @@ const router = createRouter({
 
 const getTitle = (i18nKey: string) => `${baseTitle} - ${t(i18nKey)}`
 
-// check authentication for marked routes by using the pinia store
-router.beforeEach(async (to, from, next) => {
-  if (!to.matched.some((record) => record.meta.requiresAuth)) {
-    next()
-    return
-  }
-
-  const authStore = useAuthStore()
-  await authStore.checkAuth()
-
-  if (authStore.isAuthenticated) {
-    next()
-  } else {
-    next({ name: 'error' })
-  }
-})
 
 // add a hook to set the page title for a better a11y
 router.afterEach((to) => {
