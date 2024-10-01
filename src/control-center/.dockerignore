@@ -1,0 +1,2 @@
+# We do not need the node_modules folder in the docker context, because we use the final dist folder
+node_modules

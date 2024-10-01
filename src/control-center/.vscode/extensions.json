@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "ms-playwright.playwright",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "vitest.explorer",
+    "lokalise.i18n-ally",
+    "deque-systems.vscode-axe-linter",
+    "stylelint.vscode-stylelint"
+  ],
+  "unwantedRecommendations": [
+    "octref.vetur"
+  ]
+}

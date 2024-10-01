@@ -1,0 +1,148 @@
+---
+include:
+  # https://pipeship.gitpages.tech.rz.db.de/docs/docs-as-code/docs/pipeline-modules/products/deploy_k8s_generic/tech-doc
+  - https://bahnhub.tech.rz.db.de/artifactory/pipeship-generic-release-local/canary/products/deploy_k8s_generic/3.5.42-20240724012626-5de1bd5.yaml
+  # 📚 https://git.tech.rz.db.de/testautomation/pipeship/jobs/pa11y
+  - https://bahnhub.tech.rz.db.de/artifactory/testautomation-generic-release-local/canary/jobs/pa11y/2.1.10-20240215153238-2a10f8a.yaml
+  # 📚 https://git.tech.rz.db.de/testautomation/pipeship/jobs/test_lighthouse_ci
+  - https://bahnhub.tech.rz.db.de/artifactory/testautomation-generic-release-local/canary/jobs/test_lighthouse_ci/1.0.0-20240624070505-95dcf1c.yaml
+
+variables:
+  # PROD env: "http://db-inner-source-tt-web-referenzimplementierungen-ri-vue.apps.dbcs-riga.comp.db.de"
+  # REVIEW env: "https://<CI_PROJECT_NAME>-<CI_ENVIRONMENT_SLUG>.apps.dbcs-riga.comp.db.de"
+  CLUSTERNAME: 'riga'
+
+  CICD_IMAGE: db-container-lib-docker-release-local.bahnhub.tech.rz.db.de/node:20-alpine
+  # Version number must match installed version from package.json
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+  GIT_SUBMODULE_STRATEGY: normal
+
+  # this is only necessary because db-inner-source has only a repo of type release and not prod
+  GLOBAL_ARTIFACTORY_RELEASE_ENV: 'release'
+
+  # disable some jobs
+  # SSQ_JOB_DISABLED: "true"   # scan sonarqube
+  # SGS_JOB_DISABLED: "true"   # scan git secrets
+  # LY_JOB_DISABLED: "true"    # lint yaml
+  # LMD_JOB_DISABLED: "true"   # lint markdown
+  LML_JOB_DISABLED: 'true' # lint MegaLinter
+  SWS_JOB_DISABLED: 'true' # scan whitesource
+  # SZB_JOB_DISABLED: "true"   # scan zap baseline
+  # SOIT_JOB_DISABLED: "true"  # scan oci image trivy
+  # SOIST_JOB_DISABLED: "true" # scan oci image secrets trivy
+  # DK8A_JOB_DISABLED: "true"  # deploy system test
+  # UK8A_JOB_DISABLED: "true"  # undeploy system test
+  # PA11Y_JOB_DISABLED: "true" # pa11y accessibility checks
+
+# interrupt jobs when new commit is pushed
+default:
+  interruptible: true
+
+.npm-cache: &npm-cache
+  cache:
+    key: $CI_PROJECT_NAME
+    paths:
+      - .npm-cache
+
+lint_application:
+  stage: validate
+  image: $CICD_IMAGE
+  tags:
+    - build
+  script:
+    - npm --cache .npm-cache --prefer-offline ci
+    - npm run lint
+  allow_failure: false
+  <<: *npm-cache
+
+lint_styles:
+  stage: validate
+  image: $CICD_IMAGE
+  tags:
+    - build
+  script:
+    - npm --cache .npm-cache --prefer-offline ci
+    - npm run lint:styles
+  allow_failure: true
+  <<: *npm-cache
+
+run_unit_tests:
+  image: $CICD_IMAGE
+  allow_failure: false
+  script:
+    - npm --cache .npm-cache --prefer-offline ci
+    - npm run coverage
+  <<: *npm-cache
+  artifacts:
+    paths:
+      - test-results/
+      - coverage/
+    expose_as: 'Code Coverage'
+    when: always
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+
+build_application:
+  image: $CICD_IMAGE
+  stage: build_artifact
+  tags:
+    - build
+  script:
+    - npm --cache .npm-cache --prefer-offline ci
+    - npm run build
+  artifacts:
+    paths:
+      - dist
+  <<: *npm-cache
+  needs:
+    - job: generate_version
+      artifacts: true
+
+build_oci_image:
+  needs:
+    - build_application
+    - generate_version
+    - generate_annotations
+
+run_system_test:
+  image: mcr-docker-remote.bahnhub.tech.rz.db.de/playwright:v1.47.1-focal@sha256:e6aea369c8061d1908223ba4d41d0244720b38f8724c78d84b6ab27d82f5a6c4
+  tags:
+    - test
+  script:
+    - echo deploy to $DK8S_APPLICATION_URL
+    - echo curl --noproxy -sL --max-time 5 -w "%{http_code}\\n" "${DK8S_APPLICATION_URL}" -o /dev/null
+    - npm --cache .npm-cache --prefer-offline ci
+    - |
+      export HTTP_PROXY=http://webproxy.comp.db.de:8080
+      export HTTPS_PROXY=http://webproxy.comp.db.de:8080
+      export NO_PROXY=localhost,.comp.db.de,.hub.db.de,.amazonaws.com,.internal,.svc.cluster.local,kubernetes.default.svc,172.20.0.1
+      export http_proxy=http://webproxy.comp.db.de:8080
+      export https_proxy=http://webproxy.comp.db.de:8080
+      export no_proxy=localhost,.comp.db.de,.hub.db.de,.amazonaws.com,.internal,.svc.cluster.local,kubernetes.default.svc,172.20.0.1
+      export E2E_TEST_URL=${DK8S_APPLICATION_URL}
+    - npx playwright test --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL
+  timeout: 15m
+  parallel: 2
+  artifacts:
+    when: always
+    paths:
+      - playwright-report/
+      - test-results/
+      - results.xml
+    reports:
+      junit: results.xml
+  <<: *npm-cache
+
+# in TT-Web, we want to deploy in the TEST namespace because there isn't a production one
+deploy_k8_prod:
+  tags:
+    - test
+
+test_pa11y:
+  variables:
+    PA11Y_URL_TO_REPLACE: 'http://localhost:8080'
+    # OR: hand over target URLs to test via PA11Y_APP_URLS var:
+    # PA11Y_APP_URLS: "${DK8S_APPLICATION_URL}/home ${DK8S_APPLICATION_URL}/static/imprint ${DK8S_APPLICATION_URL}/static/help"
+
+test_lighthouse_ci:
+  variables:
+    CICRED_ENV_FILE_DEFAULT: './pipeship/lhci.env'

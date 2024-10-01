@@ -1,0 +1,114 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AppTextarea > renders an error message 1`] = `
+<div
+  data-v-app=""
+>
+  
+  <label
+    aria-hidden="true"
+    class="elm-label"
+    data-v-9248a95e=""
+    for="my-input"
+    id="my-input-label"
+  >
+    My Input
+  </label>
+  <textarea
+    aria-describedby="my-input-hint"
+    aria-invalid="true"
+    aria-labelledby="my-input-label"
+    class="elm-textarea"
+    data-v-9248a95e=""
+    id="my-input"
+    name="my-input"
+    placeholder="please enter some text"
+  />
+  <output
+    data-v-9248a95e=""
+    for="body"
+    id="result_body"
+  />
+  <p
+    class="description"
+    data-v-9248a95e=""
+    id="my-input-hint"
+  >
+    
+    My error message
+    
+  </p>
+  
+</div>
+`;
+
+exports[`AppTextarea > renders showing a max counter 1`] = `
+<div
+  data-v-app=""
+>
+  
+  <label
+    aria-hidden="true"
+    class="elm-label"
+    data-v-9248a95e=""
+    for="my-input"
+    id="my-input-label"
+  >
+    My Input
+  </label>
+  <textarea
+    aria-describedby="my-input-hint"
+    aria-invalid="false"
+    aria-labelledby="my-input-label"
+    class="elm-textarea"
+    data-v-9248a95e=""
+    id="my-input"
+    maxlength="20"
+    name="my-input"
+    placeholder="please enter some text"
+  />
+  <output
+    data-v-9248a95e=""
+    for="body"
+    id="result_body"
+  >
+    8/20
+  </output>
+  <!--v-if-->
+  
+</div>
+`;
+
+exports[`AppTextarea > renders the input field 1`] = `
+<div
+  data-v-app=""
+>
+  
+  <label
+    aria-hidden="true"
+    class="elm-label"
+    data-v-9248a95e=""
+    for="my-input"
+    id="my-input-label"
+  >
+    My Input
+  </label>
+  <textarea
+    aria-describedby="my-input-hint"
+    aria-invalid="false"
+    aria-labelledby="my-input-label"
+    class="elm-textarea"
+    data-v-9248a95e=""
+    id="my-input"
+    name="my-input"
+    placeholder="please enter some text"
+  />
+  <output
+    data-v-9248a95e=""
+    for="body"
+    id="result_body"
+  />
+  <!--v-if-->
+  
+</div>
+`;

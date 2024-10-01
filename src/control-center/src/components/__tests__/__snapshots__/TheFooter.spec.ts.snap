@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TheFooter > renders properly 1`] = `
+<footer
+  class="rea-footer"
+  data-v-49c9d9a5=""
+  role="contentinfo"
+>
+  <ul
+    class="cmp-metanavigation"
+    data-v-49c9d9a5=""
+  >
+    <li
+      data-v-49c9d9a5=""
+    >
+      <routerlink
+        class="elm-link"
+        data-v-49c9d9a5=""
+        title="imprint"
+        to="/imprint"
+      >
+        imprint
+      </routerlink>
+    </li>
+    <li
+      data-v-49c9d9a5=""
+    >
+      <routerlink
+        class="elm-link"
+        data-v-49c9d9a5=""
+        title="help"
+        to="/help"
+      >
+        help
+      </routerlink>
+    </li>
+  </ul>
+   Copyright 2022 DB Systel 
+</footer>
+`;

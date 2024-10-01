@@ -1,0 +1,52 @@
+---
+3rdParty: 3rd party licenses
+back: Back
+contact: Contact
+createQuote: Create quote
+credentials: Login test data
+delete: Delete
+deleteQuoteBody: Do you really want to delete this quote?
+deleteQuoteTitle: Delete quote
+demo: Demo
+edit: Edit
+env: Environment
+error: Error
+errorDetails: The requested page cannot be shown. Please sign in first.
+form:
+  author:
+    error: An author must be specified.
+    placeholder: Author of the quote
+    title: Author
+  body:
+    error: A quote must be entered.
+    title: Quote
+  cancel: Cancel
+  notes:
+    title: Notes
+  save: Save
+  title:
+    error: A title must be provided.
+    placeholder: A title for the following quote
+    title: title
+help: Help
+home: Home
+imprint: Imprint
+info: Info
+loginSuccessText: Login successful
+notes: notes
+onlyForLoggedInUsers: This page is only visible to logged in people
+password: Password
+pleaseSignIn: Please sign in to be able to visit the page "User".
+profilePage: To the Profile Page
+quote: Quote
+refreshed: Updated
+show: Show
+signin: Sign In
+signout: Sign Out
+technicalInformation: Technical information
+updateQuote: Edit quote
+user: User
+username: Username
+version: version
+welcome: Welcome to the PopUpSim-ControlCenter.js
+"yes": "Yes"

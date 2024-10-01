@@ -1,0 +1,37 @@
+{
+  "defaults": {
+    "timeout": 30000,
+    "wait": 5000,
+    "includeWarnings": true,
+    "reporters": [
+      "cli",
+      [
+        "pa11y-ci-reporter-html",
+        {
+          "destination": "./reports"
+        }
+      ],
+      [
+        "json",
+        {
+          "fileName": "./reports/pa11y-result.json"
+        }
+      ]
+    ],
+    "chromeLaunchConfig": {
+      "ignoreHTTPSErrors": true,
+      "args": [
+        "--no-sandbox"
+      ]
+    }
+  },
+  "urls": [
+    "http://localhost:8080",
+    "http://localhost:8080/help",
+    {
+      "url": "http://localhost:8080/imprint",
+      "timeout": 10000,
+      "screenCapture": "./reports/imprint"
+    }
+  ]
+}

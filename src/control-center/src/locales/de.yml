@@ -1,0 +1,56 @@
+---
+3rdParty: 3rd Party Lizenzen
+back: Zurück
+contact: Kontakt
+createQuote: Zitat anlegen
+delete: Löschen
+deleteQuoteBody: Willst du dieses Zitat wirklich löschen?
+deleteQuoteTitle: Zitat löschen
+demo: Demo
+edit: Bearbeiten
+env: Umgebung
+error: Fehler
+errorDetails: >-
+  Die aufgerufene Seite kann nicht angezeigt werden. Bitte melden Sie sich
+  zuerst an.
+form:
+  author:
+    error: Es muss ein(e) Autor(in) angegeben werden.
+    placeholder: Autor(in) des Zitats
+    title: Autor(in)
+  body:
+    error: Es muss ein Zitat eingegeben werden.
+    title: Zitat
+  cancel: Abbrechen
+  notes:
+    title: Notizen
+  save: Speichern
+  title:
+    error: Es muss ein Titel angegeben werden.
+    placeholder: Ein Titel für das nachfolgende Zitat
+    title: Titel
+help: Hilfe
+home: Startseite
+imprint: Impressum
+info: Info
+loginSuccessText: >-
+  Dieser Bereich ist nur sichtbar, wenn Sie sich erfolgreich authentifiziert
+  haben.
+notes: Notizen
+onlyForLoggedInUsers: Diese Seite ist nur für eingeloggte Personen sichtbar
+password: Passwort
+pleaseSignIn: >-
+  Bitte melden Sie sich an, um Zugriff auf die Seite "Benutzer" zu erhalten.
+profilePage: Zur Profilseite
+quote: Zitat
+refreshed: Aktualisiert
+show: Anzeigen
+signin: Anmelden
+signout: Abmelden
+technicalInformation: Technische Informationen
+updateQuote: Zitat bearbeiten
+user: Benutzer
+username: Benutzername
+version: Version
+welcome: Willkommen bei der PopUpSim-ControlCenter.js
+"yes": Ja

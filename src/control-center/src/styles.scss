@@ -1,0 +1,12 @@
+@import '@db-ui/core/sources/css/rollup.assets-paths';
+@import '@db-ui/core/sources/css/enterprise/db-ui-core';
+
+a.elm-button {
+  text-decoration: none;
+}
+
+.btn-group {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
