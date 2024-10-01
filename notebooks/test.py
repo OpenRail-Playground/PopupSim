@@ -112,8 +112,9 @@ class locomotive(object):
     def run(self):
 
       # yield self.env.process(self.run_routine(self.global_setting.tracks.workshop_tracks[0]))
-      self.env.process(self.global_setting.tracks.workshop_tracks[0].change_coupling_system())
-      while True:
+      self.env.process(self.global_setting.tracks.workshop_tracks[1].change_coupling_system())
+      while (self.global_setting.tracks.toBeRetrofitted.wagons + self.global_setting.tracks.workshop_tracks[0].wagons + self.global_setting.tracks.workshop_tracks[1].wagons):
+
         available_workshop = self.global_setting.get_available_workshop()
         if available_workshop:
            yield self.env.process(self.run_routine(available_workshop))
