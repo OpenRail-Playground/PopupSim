@@ -57,6 +57,12 @@ repos:
           ]
         verbose: true
 
+      - id: pyre
+        name: pyre
+        entry: pyre check
+        pass_filenames: false
+        language: python
+
       - id: unit-test-run
         name: unit-test-run
         entry: coverage run -m unittest -k blp

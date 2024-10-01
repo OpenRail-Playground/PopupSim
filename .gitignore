@@ -1,2 +1,5 @@
 
 venv_popupsim
+.venv
+.pyre
+.coverage
