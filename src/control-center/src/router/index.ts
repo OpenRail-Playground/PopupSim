@@ -7,7 +7,7 @@ import HelpView from '../views/HelpView.vue'
 import HomeView from '../views/HomeView.vue'
 import VisualiserView from '../views/VisualiserView.vue'
 
-const baseTitle = `PopUpSim-ControlCenter.js`
+const baseTitle = `PopUpSim - Control Center`
 
 const { t } = i18n.global
 
@@ -38,46 +38,6 @@ const router = createRouter({
       component: ErrorView,
       meta: { i18nKey: 'error' }
     },
-    {
-      path: '/user',
-      name: 'user',
-      // route level code-splitting
-      // this generates a separate chunk (PageOne.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/UserView.vue'),
-      meta: { i18nKey: 'user' }
-    },
-    {
-      path: '/demo',
-      redirect: { name: 'quotes' },
-      meta: {},
-      children: [
-        {
-          path: 'quotes',
-          name: 'quotes',
-          component: () => import('../views/QuotesView.vue'),
-          meta: { i18nKey: 'quotes'}
-        },
-        {
-          path: 'quotes/show/:slug',
-          name: 'quote',
-          component: () => import('../views/QuoteView.vue'),
-          meta: { i18nKey: 'quote' }
-        },
-        {
-          path: 'quotes/create',
-          name: 'createQuote',
-          component: () => import('../views/QuoteCreateView.vue'),
-          meta: { i18nKey: 'createQuote'}
-        },
-        {
-          path: 'quotes/edit/:slug',
-          name: 'editQuote',
-          component: () => import('../views/QuoteEditView.vue'),
-          meta: { i18nKey: 'editQuote'}
-        }
-      ]
-    }
   ]
 })
 
