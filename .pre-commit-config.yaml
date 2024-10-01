@@ -1,0 +1,70 @@
+repos:
+  - repo: local
+    hooks:
+      - id: poetry-check
+        name: poetry-check
+        description: run poetry check to validate config
+        entry: poetry check
+        language: system
+        pass_filenames: false
+        files: (^|/)pyproject.toml$
+
+      - id: trailing-whitespace-fixer
+        name: trailing-whitespace-fixer
+        entry: trailing-whitespace-fixer
+        language: python
+        exclude: .parquet$
+
+      - id: end-of-file-fixer
+        name: end-of-file-fixer
+        entry: end-of-file-fixer
+        language: python
+        exclude: '^(.*parquet|tests\/fixtures\/.*)$'
+
+      - id: reorder-python-imports
+        name: reorder-python-imports
+        entry: reorder-python-imports
+        language: python
+        files: '\.py$'
+        args: ['--application-directories', 'src:tests']
+
+      - id: black
+        name: black
+        entry: black
+        language: python
+        files: '\.py$'
+
+      - id: pydocstyle
+        name: pydocstyle
+        entry: pydocstyle
+        language: python
+        files: '\.py$'
+        exclude: '^tests\/|experiments\/'
+
+      - id: pylint
+        name: pylint
+        entry: env PYTHONPATH='src/blp/:tests/blp/' pylint
+        language: system
+        require_serial: true
+        types: [python]
+        pass_filenames: false
+        files: '\.py$'
+        args:
+          [
+            'src', 'tests',
+            '-rn', # Only display messages
+            '-sn', # Don't display the score
+          ]
+        verbose: true
+
+      - id: pyre
+        name: pyre
+        entry: pyre check
+        pass_filenames: false
+        language: python
+
+      - id: unit-test-run
+        name: unit-test-run
+        entry: coverage run -m unittest -k blp
+        pass_filenames: false
+        language: system
