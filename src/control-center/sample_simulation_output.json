@@ -90,7 +90,7 @@
       "lokomotive": {
         "lokomotiveId": "Lok1",
         "coupledWith:": ["Wagon10", "Wagon11", "Wagon12"],
-        "position": "retrofitted",
+        "position": "WorkshopGleis2",
         "target": "retrofitted"
       }
     }

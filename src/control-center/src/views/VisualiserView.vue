@@ -43,7 +43,7 @@ function render() {
   //all images are 128x128
 
   //draw locomotive
-  switch (sample_simulation_output.events[0].lokomotive.position) {
+  switch (sample_simulation_output.events[currentStep].lokomotive.position) {
     case 'retrofitted':
       drawImage(ctx, 'steam-locomotive.png', 633, 60)
       break
@@ -57,10 +57,22 @@ function render() {
       drawImage(ctx, 'steam-locomotive.png', 790, 750)
       break
   }
+
   //draw all vagons
-  drawImage(ctx, 'vagon.png', 5, 200)
-  drawImage(ctx, 'vagon.png', 5, 300)
-  drawImage(ctx, 'vagon.png', 5, 400)
+  sample_simulation_output.events[currentStep].retrofitted.forEach((retrofitted, index) => {
+    drawImage(ctx, 'vagon.png', 5 + index * 128 + 5, 200)
+  })
+
+  sample_simulation_output.events[currentStep].toBeRetrofitted.forEach((retrofitted, index) => {
+    drawImage(ctx, 'vagon.png', 5 + index * 128 + 5, 200)
+  })
+
+  sample_simulation_output.events[currentStep].workshopGleise.forEach((element) => {
+    element.wagons.forEach((wagon, index) => {
+      //TODO based on
+      drawImage(ctx, 'vagon.png', 5 + index * 128 + 5, 200)
+    })
+  })
 }
 
 function drawImage(ctx, image, x, y) {
