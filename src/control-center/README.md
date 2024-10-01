@@ -3,7 +3,8 @@
 3LH Challenge
 
 ## ToDos
-- [] Sort tracks based on relative location 
+- [x] Sort tracks based on relative location (done manually in input file)
+- [] Save config in local storage
 
 ## Architecture
 

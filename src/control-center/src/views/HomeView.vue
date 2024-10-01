@@ -3,6 +3,7 @@ import {onBeforeMount, ref, toRef} from 'vue'
 import {useTopologyStore} from "@/stores/topology";
 import TrackConfiguration from "@/components/TrackConfiguration.vue";
 import {storeToRefs} from "pinia";
+import ParameterForm from "@/components/ParameterForm.vue";
 
 const ts = useTopologyStore()
 const { topology } = storeToRefs(ts)
@@ -18,6 +19,7 @@ onBeforeMount(async () => {
       Neue Simulation konfigurieren
     </h1>
     <TrackConfiguration v-if="topology" :tracks="topology.popupSites[0].tracks" />
+    <ParameterForm></ParameterForm>
     <RouterLink
       to="/simulation"
       class="elm-button"

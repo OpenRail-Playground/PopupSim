@@ -3,7 +3,7 @@ import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string
+    modelValue: number
     id: string
     title: string
     placeholder?: string
@@ -31,7 +31,7 @@ const value = computed({
 
 <template>
   <input
-    type="text"
+    type="number"
     class="elm-input"
     v-model="value"
     :placeholder="placeholder"
