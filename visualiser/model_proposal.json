@@ -1,96 +1,107 @@
 comments:
 sc=Schraubenkupplung
 dac=DAK-Kupplung
+status values= todo, doing, done
 
 {
   "timeConstants": {
     "timeToCouple": 10,
     "timeToUncouple": 10,
     "timeToRetrofit": 20,
-    "timeToMove": 10
+    "timeToMove": 10,
+    "TODOkpi": "asdxcy"
   },
-  "retrofitted": [
+  "events": [
     {
-      "wagonId": "Wagon1",
-      "length,": 20,
-      "couplerType0": "dac"
-    },
-    {
-      "wagonId": "Wagon2",
-      "length,": 20,
-      "couplerType": "dac"
-    },
-    {
-      "wagonId": "Wagon3",
-      "length,": 20,
-      "couplerType": "dac"
-    }
-  ],
-  "toBeRetrofitted": [
-    {
-      "wagonId": "Wagon4",
-      "length,": 20,
-      "couplerType": "sc"
-    },
-    {
-      "wagonId": "Wagon5",
-      "length,": 20,
-      "couplerType": "sc"
-    },
-    {
-      "wagonId": "Wagon6",
-      "length,": 20,
-      "couplerType": "sc"
-    }
-  ],
-  "workshopGleise": [
-    {
-      "name": "WorkshopGleis1",
-      "percentDone": 0,
-      "wagons": [
+      "timestamp": "iso datetime",
+      "retrofitted": [
         {
-          "wagonId": "Wagon7",
+          "wagonId": "Wagon1",
           "length,": 20,
-          "couplerType": "sc"
+          "couplerType0": "dac"
         },
         {
-          "wagonId": "Wagon8",
-          "length,": 20,
-          "couplerType": "sc"
-        },
-        {
-          "wagonId": "Wagon9",
-          "length,": 20,
-          "couplerType": "sc"
-        }
-      ]
-    },
-    {
-      "name": "WorkshopGleis2",
-      "percentDone": 100,
-      "wagons": [
-        {
-          "wagonId": "Wagon10",
+          "wagonId": "Wagon2",
           "length,": 20,
           "couplerType": "dac"
         },
         {
-          "wagonId": "Wagon11",
-          "length,": 20,
-          "couplerType": "dac"
-        },
-        {
-          "wagonId": "Wagon12",
+          "wagonId": "Wagon3",
           "length,": 20,
           "couplerType": "dac"
         }
-      ]
+      ],
+      "toBeRetrofitted": [
+        {
+          "wagonId": "Wagon4",
+          "length,": 20,
+          "couplerType": "sc"
+        },
+        {
+          "wagonId": "Wagon5",
+          "length,": 20,
+          "couplerType": "sc"
+        },
+        {
+          "wagonId": "Wagon6",
+          "length,": 20,
+          "couplerType": "sc"
+        }
+      ],
+      "workshopGleise": [
+        {
+          "name": "WorkshopGleis1",
+          "status": 0,
+          "wagons": [
+            {
+              "wagonId": "Wagon7",
+              "length,": 20,
+              "couplerType": "sc"
+            },
+            {
+              "wagonId": "Wagon8",
+              "length,": 20,
+              "couplerType": "sc"
+            },
+            {
+              "wagonId": "Wagon9",
+              "length,": 20,
+              "couplerType": "sc"
+            }
+          ]
+        },
+        {
+          "name": "WorkshopGleis2",
+          "status": "todo",
+          "wagons": [
+            {
+              "wagonId": "Wagon10",
+              "length,": 20,
+              "couplerType": "dac"
+            },
+            {
+              "wagonId": "Wagon11",
+              "length,": 20,
+              "couplerType": "dac"
+            },
+            {
+              "wagonId": "Wagon12",
+              "length,": 20,
+              "couplerType": "dac"
+            }
+          ]
+        }
+      ],
+      "lokomotive": {
+        "lokomotiveId": "Lok1",
+        "coupledWith:": [
+          "Wagon10",
+          "Wagon11",
+          "Wagon12"
+        ],
+        "position": "WorkshopGleis2",
+        "target": "retrofitted"
+      }
     }
-  ],
-  "lokomotive": {
-    "lokomotiveId": "Lok1",
-    "coupledWith:": ["Wagon7", "Wagon8", "Wagon9"],
-    "position": "head",
-    "target": "WorkshopGleis2"
-  }
+  ]
 }
