@@ -17,7 +17,6 @@ class GlobalSetting(object):
 
         self.setup_scenario()
         self.env.run(until=1500)
-        self.save_log_json()
 
     def setup_scenario(self):
         self.tracks = TrackCollection(self.env, self.conf)
@@ -65,4 +64,10 @@ class GlobalSetting(object):
 
 
 if __name__ == "__main__":
-    GlobalSetting(Config())
+    settings_dict = {"parameters": {}}
+    settings_dict["parameters"]["workshop"] = 180
+    settings_dict["parameters"]["shuntingMovement"] = 8
+    settings_dict["parameters"]["movement"] = 5
+    settings_dict["parameters"]["coupling"] = 8
+    setting = GlobalSetting(Config(settings_dict))
+    setting.save_log_json()
