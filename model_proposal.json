@@ -1,3 +1,7 @@
+comments:
+sc=Schraubenkupplung
+dac=DAK-Kupplung
+
 {
   "timeConstants": {
     "timeToCouple": 10,
@@ -9,34 +13,34 @@
     {
       "wagonId": "Wagon1",
       "lenght,": 20,
-      "kupplungsArt": "retrofitted"
+      "kupplungsArt": "dac"
     },
     {
       "wagonId": "Wagon2",
       "lenght,": 20,
-      "kupplungsArt": "retrofitted"
+      "kupplungsArt": "dac"
     },
     {
       "wagonId": "Wagon3",
       "lenght,": 20,
-      "kupplungsArt": "retrofitted"
+      "kupplungsArt": "dac"
     }
   ],
   "toBeRetrofitted": [
     {
       "wagonId": "Wagon4",
       "lenght,": 20,
-      "kupplungsArt": "toBeRetrofitted"
+      "kupplungsArt": "sc"
     },
     {
       "wagonId": "Wagon5",
       "lenght,": 20,
-      "kupplungsArt": "toBeRetrofitted"
+      "kupplungsArt": "sc"
     },
     {
       "wagonId": "Wagon6",
       "lenght,": 20,
-      "kupplungsArt": "toBeRetrofitted"
+      "kupplungsArt": "sc"
     }
   ],
   "workshopGleise": [
@@ -47,38 +51,38 @@
         {
           "wagonId": "Wagon7",
           "lenght,": 20,
-          "kupplungsArt": "toBeRetrofitted"
+          "kupplungsArt": "sc"
         },
         {
           "wagonId": "Wagon8",
           "lenght,": 20,
-          "kupplungsArt": "toBeRetrofitted"
+          "kupplungsArt": "sc"
         },
         {
           "wagonId": "Wagon9",
           "lenght,": 20,
-          "kupplungsArt": "toBeRetrofitted"
+          "kupplungsArt": "sc"
         }
       ]
     },
     {
       "name": "WorkshopGleis2",
-      "percentDone": 80,
+      "percentDone": 100,
       "wagons": [
         {
           "wagonId": "Wagon10",
           "lenght,": 20,
-          "kupplungsArt": "retrofitted"
+          "kupplungsArt": "dac"
         },
         {
           "wagonId": "Wagon11",
           "lenght,": 20,
-          "kupplungsArt": "retrofitted"
+          "kupplungsArt": "dac"
         },
         {
           "wagonId": "Wagon12",
           "lenght,": 20,
-          "kupplungsArt": "toBeRetrofitted"
+          "kupplungsArt": "dac"
         }
       ]
     }
@@ -86,7 +90,7 @@
   "lokomotive": {
     "lokomotiveId": "Lok1",
     "coupledWith:": ["Wagon7", "Wagon8", "Wagon9"],
-    "position": "WorkshopGleis1",
-    "target": "head"
+    "position": "head",
+    "target": "WorkshopGleis2"
   }
 }
