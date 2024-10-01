@@ -4,7 +4,13 @@
 
 ## ToDos
 - [x] Sort tracks based on relative location (done manually in input file)
-- [] Save config in local storage
+- [ ] Adapt UI to visual design
+- [ ] Generate configuration.json on the fly
+- [ ] Call API 
+- [ ] route to visualizer
+- [ ] Deploy frontend to GitHub Pages
+- [ ] Save config in local storage
+
 
 ## Architecture
 

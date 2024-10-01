@@ -11,6 +11,7 @@ demo: Demo
 edit: Edit
 env: Environment
 error: Error
+function: function
 errorDetails: The requested page cannot be shown. Please sign in first.
 form:
   workshop:
@@ -21,6 +22,7 @@ form:
     title: head movement
   coupling:
     title: coupling
+popupSite: pop-up site
 help: Help
 home: Start new simulation
 imprint: Imprint
