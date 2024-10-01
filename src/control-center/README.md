@@ -6,9 +6,9 @@
 - [x] Sort tracks based on relative location (done manually in input file)
 - [x] Adapt UI to visual design
 - [x] Generate configuration.json on the fly
-- [ ] Call API and store response
-- [ ] Add number of waggons per workshop
-- [ ] route to visualizer
+- [x] Call API and store response
+- [x] Add number of waggons per workshop
+- [x] route to visualizer
 - [ ] Deploy frontend to GitHub Pages
 - [ ] Save config in local storage
 

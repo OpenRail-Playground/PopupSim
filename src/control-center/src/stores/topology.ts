@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import type {PopupSite, Topology} from "@/utils/api";
+import type { PopupSite, Topology } from '@/utils/api'
 import topologyFile from '../assets/topology.yaml?url'
-import {parse} from "yaml";
+import { parse } from 'yaml'
 
 export const useTopologyStore = defineStore('topology', () => {
   const topology = ref<Topology>()
@@ -24,6 +24,5 @@ export const useTopologyStore = defineStore('topology', () => {
     }
   }
 
-
-  return { popupSite, getPopupSite, getDefaultPopupSite, loadTopology, topology  }
+  return { popupSite, getPopupSite, getDefaultPopupSite, loadTopology, topology }
 })

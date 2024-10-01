@@ -22,6 +22,8 @@ form:
     title: Kopffahrt (in Minuten)
   coupling:
     title: Kupplung (in Minuten)
+  wagonsPerWorkshop:
+    title: Waggons pro Werkstatt
 help: Hilfe
 home: Simulator konfigurieren
 popupSite: Pop-up-Site

@@ -1,20 +1,30 @@
 <script setup lang="ts">
-import {useTopologyStore} from "@/stores/topology";
+import { useTopologyStore } from '@/stores/topology'
+import { storeToRefs } from 'pinia'
 
-const {popupSite} = useTopologyStore()
-
+const ts = useTopologyStore()
+const { popupSite } = storeToRefs(ts)
 </script>
 
 <template>
   <form>
-    <div class="row" v-for="track of popupSite.tracks" :key="track.id">
+    <div class="row" v-if="popupSite" v-for="track of popupSite.tracks" :key="track.id">
       <div class="rea-grid" id="tracklist">
-        <div class="track"><p><strong>{{ track.id }}</strong>
-        </p></div>
-        <div class="length"><p>{{ track.length }} Meter</p></div>
+        <div class="track">
+          <p>
+            <strong>{{ track.id }}</strong>
+          </p>
+        </div>
+        <div class="length">
+          <p>{{ track.length }} Meter</p>
+        </div>
         <div>
-          <select class="elm-select function" :name="track.id+'select'" :id="track.id+'select'"
-                  v-model="track.function">
+          <select
+            class="elm-select function"
+            :name="track.id + 'select'"
+            :id="track.id + 'select'"
+            v-model="track.function"
+          >
             <option></option>
             <option value="workshop">Werkstatt</option>
             <option value="toBeRetrofitted">umzubauende Wagen</option>
@@ -23,7 +33,6 @@ const {popupSite} = useTopologyStore()
             <option value="stationHead">Bahnhofskopf</option>
           </select>
           <label class="elm-label" for="select">{{ $t('function') }}</label>
-
         </div>
       </div>
     </div>

@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { onMounted, Ref, ref, watch } from 'vue'
 import sample_simulation_output from '../../data.json'
+import { useSimulationStore } from '@/stores/simulation'
+import { storeToRefs } from 'pinia'
 
+const simulationStore = useSimulationStore()
+// this will contain the data. Since the call is async, it could take time, make sure to check the boolean before use
+// Maybe use the sample output instead if loading is incomplete?
+const { simulation, isSimulationRequested, isSimulationFinished } = storeToRefs(simulationStore)
 var currentStep = 0
 var lastLocomotivePosition = 'unknown'  // Default initial position
 
@@ -129,13 +135,15 @@ function drawText(ctx, text, x, y) {
 </script>
 
 <template>
-  <input 
-    type="range" 
-    min="0" 
-    :max="sample_simulation_output.length - 1" 
-    v-model="sliderValue" 
-    style="width: 500px" 
-    ref="slider" 
+  {{ isSimulationRequested }}
+  {{ isSimulationFinished }}
+  <input
+    type="range"
+    min="0"
+    :max="sample_simulation_output.length - 1"
+    v-model="sliderValue"
+    style="width: 500px"
+    ref="slider"
   />
   <canvas ref="canvasElement" width="1920" height="1080" />
 </template>

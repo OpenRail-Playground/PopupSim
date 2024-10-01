@@ -1,4 +1,3 @@
-import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from 'pinia'
 
 /** Signature of the browser fetch function. */
@@ -11,7 +10,7 @@ function isMutatingMethod(method: string): boolean {
 }
 
 export function getBackendUrl() {
-  return ""
+  return "http://localhost:8000"
 }
 
 export async function fetchBackend(path: string, init?: RequestInit): Promise<Response> {
@@ -19,13 +18,11 @@ export async function fetchBackend(path: string, init?: RequestInit): Promise<Re
   path = path.startsWith('/') ? path : '/' + path
   const url = getBackendUrl() + path
 
-  const { authInfo } = storeToRefs(useAuthStore())
 
-  if (isMutatingMethod(init?.method ?? 'GET') && authInfo?.value?.csrfToken) {
+  if (isMutatingMethod(init?.method ?? 'GET') ) {
     init = {
       ...init,
       headers: {
-        'X-CSRF-Token': authInfo.value.csrfToken,
         ...init?.headers
       }
     }
@@ -34,7 +31,6 @@ export async function fetchBackend(path: string, init?: RequestInit): Promise<Re
   try {
     return await fetch(url, {
       mode: 'cors', // use request headers for cross-origin calls
-      credentials: 'include', // include session cookie in cross-origin calls to backend
       ...init
     })
   } catch (err) {

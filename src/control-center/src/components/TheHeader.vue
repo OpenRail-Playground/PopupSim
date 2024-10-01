@@ -2,7 +2,6 @@
 import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n()
-
 </script>
 
 <template>
@@ -21,21 +20,6 @@ const { locale } = useI18n()
         <li>
           <RouterLink to="/visualizer" class="elm-link" :title="$t('visualizer')">
             {{ $t('visualizer') }}
-          </RouterLink>
-        </li>
-        <li>
-          <!-- Use a custom RouterLink here since db-ui highlights the nav item when aria-current="page" is set -->
-          <!-- By default the RouterLink sets aria-current="page" only when exact route matches.  -->
-          <!-- We want to highlight it also, when sub-routes (e.g /demo/quotes or /demo/quotes/create) is opened  -->
-          <RouterLink custom v-slot="{ isActive, href, navigate }" to="/demo">
-            <a
-              :href="href"
-              :aria-current="isActive ? 'page' : undefined"
-              class="elm-link"
-              title="Demo"
-              @click="navigate"
-              >{{ $t('demo') }}</a
-            >
           </RouterLink>
         </li>
       </ul>

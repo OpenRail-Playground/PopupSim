@@ -5,7 +5,7 @@ import i18n from '../locales'
 import ErrorView from '../views/ErrorView.vue'
 import HelpView from '../views/HelpView.vue'
 import HomeView from '../views/HomeView.vue'
-import VisualiserView from '../views/VisualiserView.vue'
+import VisualizerView from '../views/VisualizerView.vue'
 
 const baseTitle = `PopUpSim - Control Center`
 
@@ -21,10 +21,10 @@ const router = createRouter({
       meta: { i18nKey: 'home' }
     },
     {
-      path: '/visualiser',
-      name: 'visualiser',
-      component: VisualiserView,
-      meta: { i18nKey: 'visualiser' }
+      path: '/visualizer',
+      name: 'visualizer',
+      component: VisualizerView,
+      meta: { i18nKey: 'visualizer' }
     },
     {
       path: '/help',
@@ -37,12 +37,11 @@ const router = createRouter({
       name: 'error',
       component: ErrorView,
       meta: { i18nKey: 'error' }
-    },
+    }
   ]
 })
 
 const getTitle = (i18nKey: string) => `${baseTitle} - ${t(i18nKey)}`
-
 
 // add a hook to set the page title for a better a11y
 router.afterEach((to) => {
