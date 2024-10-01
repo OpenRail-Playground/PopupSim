@@ -11,17 +11,7 @@ function isMutatingMethod(method: string): boolean {
 }
 
 export function getBackendUrl() {
-  let backendUrl = import.meta.env.VITE_BACKEND_URL
-  if (!backendUrl) {
-    throw new Error('Set VITE_BACKEND_URL env-var or use backendUrl attribute of BackendProvider.')
-  }
-
-  if (backendUrl.endsWith('/')) {
-    // make sure url does not end with a slash.
-    backendUrl = backendUrl.slice(0, -1)
-  }
-
-  return backendUrl
+  return ""
 }
 
 export async function fetchBackend(path: string, init?: RequestInit): Promise<Response> {

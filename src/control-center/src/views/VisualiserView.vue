@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { onMounted, Ref, ref } from 'vue'
+import sample_simulation_output from '../../sample_simulation_output.json'
 
 // The important part: the name of the variable needs to be equal to the ref's name of the canvas element in the template
 const canvasElement: Ref<HTMLCanvasElement | undefined> = ref()
 const context: Ref<CanvasRenderingContext2D | undefined> = ref()
 
 const env = import.meta.env
+var loadedJson = ''
 
 onMounted(() => {
+  fetch(`sample_simulation_output.json`)
+    .then((response) => response.text())
+    .then((res) => {
+      loadedJson = res
+      console.log(sample_simulation_output)
+    })
+
   // Get canvas context. If 'getContext' returns 'null', set to 'undefined', so that it conforms to the Ref typing
   context.value = canvasElement.value?.getContext('2d') || undefined
   render()
-})
-
-onMounted(async () => {
-  fetch(`${env.BASE_URL}sample_simulation_output.json`)
-    .then((response) => response.text())
-    .then((res) => {
-      console.log(res) //loaded file from disk
-    })
 })
 
 function render() {
@@ -27,6 +28,7 @@ function render() {
   }
 
   var ctx = context.value
+
   // Define a new path
   ctx.beginPath()
 
@@ -38,6 +40,8 @@ function render() {
 
   // Stroke it (Do the Drawing)
   ctx.stroke()
+
+  ctx.roundRect(35, 10, 225, 110, 20) //or .fill() for a filled rect
 }
 </script>
 
