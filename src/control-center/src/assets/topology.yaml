@@ -1,4 +1,3 @@
-# Location Code?
 popupSites:
   - name: Haldensleben
     id: 1
@@ -8,34 +7,34 @@ popupSites:
       - Hafenbahn_LM
       - Strecke_6892
     tracks:
+      - id: "24"
+        length: 203
+      - id: "23"
+        length: 212
+      - id: "22"
+        length: 266
+      - id: "19"
+        length: 169
+      - id: "18"
+        length: 216
+      - id: "17"
+        length: 257
       - id: "Z1"
         length: 260
       - id: "10"
         length: 260
-      - id: "6"
-        length: 426
+      - id: "9"
+        length: 270
+      - id: "8"
+        length: 150
       - id: "7"
         length: 352
+      - id: "6"
+        length: 426
       - id: "1A"
         length: 395
       - id: "3a"
         length: 621
       - id: "3"
         length: 670
-      - id: "8"
-        length: 150
-      - id: "9"
-        length: 270
-      - id: "17"
-        length: 257
-      - id: "18"
-        length: 216
-      - id: "19"
-        length: 169
-      - id: "22"
-        length: 266
-      - id: "23"
-        length: 212
-      - id: "24"
-        length: 203
 

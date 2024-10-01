@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { toRef } from 'vue'
-import { useAuthStore } from '../stores/auth'
+import {onBeforeMount, ref, toRef} from 'vue'
+import {useTopologyStore} from "@/stores/topology";
+import TrackConfiguration from "@/components/TrackConfiguration.vue";
+import {storeToRefs} from "pinia";
 
-const authStore = useAuthStore()
-const isAuthenticated = toRef(authStore, 'isAuthenticated')
+const ts = useTopologyStore()
+const { topology } = storeToRefs(ts)
+
+onBeforeMount(async () => {
+  await ts.loadTopology()
+})
 </script>
 
 <template>
@@ -11,13 +17,14 @@ const isAuthenticated = toRef(authStore, 'isAuthenticated')
     <h1 class="elm-headline">
       Neue Simulation konfigurieren
     </h1>
+    <TrackConfiguration v-if="topology" :tracks="topology.popupSites[0].tracks" />
     <RouterLink
-      to="/user"
+      to="/simulation"
       class="elm-button"
       data-variant="brand-primary"
-      :title="$t('help')"
+      title="Starte Simulation"
     >
-      {{ $t('user') }}
+      Starte Simulation
     </RouterLink>
   </div>
 </template>

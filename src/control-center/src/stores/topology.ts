@@ -1,19 +1,25 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type {Topology} from "@/utils/api";
+import topologyFile from '../assets/topology.yaml?url'
+import {parse} from "yaml";
 
 export const useTopologyStore = defineStore('topology', () => {
   const error = ref<Error>()
   const topology = ref<Topology[]>([])
 
   const getPopupSite = computed(() => (id: number) => {
-    return topology.value.find((popupSite) => popupSite.id === id)
+    return topology.value.popupSites.find((popupSite) => popupSite.id === id)
   })
 
   const getDefaultPopupSite = computed(() => () => {
-    return getPopupSite(1);
+    return getPopupSite.value(1)
   })
 
+  async function loadTopology() {
+    const fileContent = await fetch(topologyFile)
+    topology.value = parse(await fileContent.text())
+  }
 
   async function getQuotes() {
     apiGetQuotes()
@@ -52,5 +58,5 @@ export const useTopologyStore = defineStore('topology', () => {
       })
   }
 
-  return { quotes, getQuote, getQuotes, createQuote, updateQuote, deleteQuote }
+  return { getPopupSite, getDefaultPopupSite, loadTopology, topology  }
 })
