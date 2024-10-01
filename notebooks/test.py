@@ -55,6 +55,24 @@ class track(object):
      self.wagons = [wagon] + self.wagons
   
 
+class WorkshopTrack(track):
+   def __init__(self, env, name):
+     self.env = env
+     self.name = name
+     self.wagons = []
+     self.is_done = False
+
+   def change_coupling_system(self):
+      yield self.env.timeout(180) 
+      for wagon in self.wagons:
+         wagon.couplerType = 'dac'
+
+   def wagons_have_coupling_system(self):
+      for wagon in self.wagons:
+         if wagon.couplerType != 'dac':
+            return False
+      return True
+   
 class wagon(object):
     
     def __init__(self, env, id, length=20, couplerType="sc"):
@@ -90,33 +108,49 @@ class locomotive(object):
           "coupledWith:": [wagon.log() for wagon in self.coupled_with],
           "position": self.cur_track.name,
         }
-
+    
     def run(self):
+
+      # yield self.env.process(self.run_routine(self.global_setting.tracks.workshop_tracks[0]))
+      self.env.process(self.global_setting.tracks.workshop_tracks[0].change_coupling_system())
+      while True:
+        available_workshop = self.global_setting.get_available_workshop()
+        if available_workshop:
+           yield self.env.process(self.run_routine(available_workshop))
+           self.env.process(available_workshop.change_coupling_system())
+        else:
+           print("waiting")
+           yield self.env.timeout(5)
+        # wait for workshop to finish
+        # with self.global_setting.workshop_2.request() as req:
+        #     yield req
+        #     yield self.env.process(self.run_routine(self.global_setting.tracks.workshop_tracks[2]))
+
+        # with self.global_setting.workshop_1.request() as req:
+        #     yield req
+        #     yield self.env.process(self.run_routine(self.global_setting.tracks.workshop_tracks[0]))
+
+
+
+    def run_routine(self, workshop_track):
+        
         print('Starting in Kopf %d' % self.env.now)
         self.global_setting.log_global_state()
 
-        # drive to b1
-        self.global_setting.tracks.workshop_tracks[0]
-        
-        yield self.env.process(self.drive_to(self.global_setting.tracks.workshop_tracks[0]))
-       
+        # drive to workshop
+        yield self.env.process(self.drive_to(workshop_track))
 
-
+        # get wagons
         yield self.env.process(self.coupling())
 
-
         # drive to C
-        
         yield self.env.process(self.drive_to(self.global_setting.tracks.retrofitted))
-        
 
         # uncoupling
-
         yield self.env.process(self.uncoupling())
 
 
         # drive to from C to a
-        
         yield self.env.process(self.drive_to(self.global_setting.tracks.toBeRetrofitted))
         
 
@@ -125,7 +159,7 @@ class locomotive(object):
 
         # drive from a to b1
         
-        yield self.env.process(self.drive_to(self.global_setting.tracks.workshop_tracks[0]))
+        yield self.env.process(self.drive_to(workshop_track))
         
 
         # uncoupling
@@ -137,7 +171,6 @@ class locomotive(object):
        
 
         self.global_setting.log_global_state()
-
 
     def coupling(self, duration=5):
         print('start coupling %d' % self.env.now)
@@ -180,7 +213,7 @@ class TrackCollection(object):
       self.retrofitted = track(env, "retrofitted")
       self.toBeRetrofitted = track(env, "toBeRetrofitted")
       self.workshop_tracks = [
-         track(env, f"WorkshopGleis{i}") for i in range(2)
+         WorkshopTrack(env, f"WorkshopGleis{i}") for i in range(2)
       ]
 
   def log(self):
@@ -205,10 +238,16 @@ class globalSetting(object):
     for i in range(20):
       self.wagons.append(wagon(self.env, i))
 
+    for i in range(3):
+      self.wagons[i].couplerType = 'dac'
+
     # add wagons to tracks
     self.tracks.workshop_tracks[0].wagons = self.wagons[:3]
     self.tracks.workshop_tracks[1].wagons = self.wagons[3:6]
     self.tracks.toBeRetrofitted.wagons = self.wagons[6:]
+
+    # self.workshop_1 = simpy.Resource(self.env, 1)
+    # self.workshop_2 = simpy.Resource(self.env, 1)
 
     # create locomotive
     self.locomotive = locomotive(self.env, self, self.tracks.head_track)
@@ -218,7 +257,7 @@ class globalSetting(object):
   
     self.global_log = []
 
-    self.env.run()
+    self.env.run(until=1500)
 
   def log_global_state(self):
      
@@ -229,6 +268,12 @@ class globalSetting(object):
            "tracks": self.tracks.log()
         }
      )
+
+  def get_available_workshop(self):
+     for track in self.tracks.workshop_tracks:
+        if track.wagons_have_coupling_system():
+           return track
+     return None
     
      
 
