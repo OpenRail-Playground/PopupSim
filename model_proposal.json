@@ -1,0 +1,92 @@
+{
+  "timeConstants": {
+    "timeToCouple": 10,
+    "timeToUncouple": 10,
+    "timeToRetrofit": 20,
+    "timeToMove": 10
+  },
+  "retrofitted": [
+    {
+      "wagonId": "Wagon1",
+      "lenght,": 20,
+      "kupplungsArt": "retrofitted"
+    },
+    {
+      "wagonId": "Wagon2",
+      "lenght,": 20,
+      "kupplungsArt": "retrofitted"
+    },
+    {
+      "wagonId": "Wagon3",
+      "lenght,": 20,
+      "kupplungsArt": "retrofitted"
+    }
+  ],
+  "toBeRetrofitted": [
+    {
+      "wagonId": "Wagon4",
+      "lenght,": 20,
+      "kupplungsArt": "toBeRetrofitted"
+    },
+    {
+      "wagonId": "Wagon5",
+      "lenght,": 20,
+      "kupplungsArt": "toBeRetrofitted"
+    },
+    {
+      "wagonId": "Wagon6",
+      "lenght,": 20,
+      "kupplungsArt": "toBeRetrofitted"
+    }
+  ],
+  "workshopGleise": [
+    {
+      "name": "WorkshopGleis1",
+      "percentDone": 0,
+      "wagons": [
+        {
+          "wagonId": "Wagon7",
+          "lenght,": 20,
+          "kupplungsArt": "toBeRetrofitted"
+        },
+        {
+          "wagonId": "Wagon8",
+          "lenght,": 20,
+          "kupplungsArt": "toBeRetrofitted"
+        },
+        {
+          "wagonId": "Wagon9",
+          "lenght,": 20,
+          "kupplungsArt": "toBeRetrofitted"
+        }
+      ]
+    },
+    {
+      "name": "WorkshopGleis2",
+      "percentDone": 80,
+      "wagons": [
+        {
+          "wagonId": "Wagon10",
+          "lenght,": 20,
+          "kupplungsArt": "retrofitted"
+        },
+        {
+          "wagonId": "Wagon11",
+          "lenght,": 20,
+          "kupplungsArt": "retrofitted"
+        },
+        {
+          "wagonId": "Wagon12",
+          "lenght,": 20,
+          "kupplungsArt": "toBeRetrofitted"
+        }
+      ]
+    }
+  ],
+  "lokomotive": {
+    "lokomotiveId": "Lok1",
+    "coupledWith:": ["Wagon7", "Wagon8", "Wagon9"],
+    "position": "WorkshopGleis1",
+    "target": "head"
+  }
+}
