@@ -3,3 +3,4 @@ venv_popupsim
 .venv
 .pyre
 .coverage
+**/__pycache__/
