@@ -6,11 +6,11 @@ The Frontend is deployed on GitHub pages: https://openrail-playground.github.io/
 
 The backend cannot be easily deployed with additional infrastructure, see [Install](#install) for details on how to run it locally. The Frontend can still be used without the backend, it will use a sample set of a simulation to demo the functionality.
 
-![overview.png](img/overview.png)
+![Overview of the user flow](img/overview.png)
 
 ## Architecture
 
-![architecture.png](img/architecture.png)
+![Overview of the architecture](img/architecture.drawio.png)
 
 ## Background
 
