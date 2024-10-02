@@ -23,6 +23,8 @@ const wagonColorInWorkshop = 'vagon-yellow.png'
 var loadedJson = ''
 
 const sliderValue = ref(0)
+const isPlaying = ref(false)
+let playInterval: number | undefined = undefined
 
 onMounted(() => {
   // Get canvas context. If 'getContext' returns 'null', set to 'undefined', so that it conforms to the Ref typing
@@ -113,7 +115,14 @@ function render() {
     })
   })
 
-  timeLabel.value.innerText = `time: ${simulation.value[currentStep].timestamp}`
+  timeLabel.value.innerText = `Vergangene Zeit (Minuten): ${simulation.value[currentStep].timestamp}`
+
+  //draw labels for the tracks and KPIs
+  drawText(ctx, 'Kopf', 68, 270)
+  drawText(ctx, 'Nachzurüsten', 633, 37)
+  drawText(ctx, 'Werkstatt Gleis 1', 633, 270)
+  drawText(ctx, 'Werkstatt Gleis 2', 633, 510)
+  drawText(ctx, 'Fertig', 833, 749)
 }
 
 function drawWagons(ctx, wagons, startX, startY, defaultColor) {
@@ -146,12 +155,38 @@ function drawText(ctx, text, x, y) {
   ctx.font = '30px Arial'
   ctx.fillText(text, x, y)
 }
+
+// Function to handle play button click
+function togglePlay() {
+  isPlaying.value = !isPlaying.value
+  if (isPlaying.value) {
+    console.log('Playing...')
+    playInterval = setInterval(() => {
+      if (sliderValue.value < simulation.value.length - 1) {
+        sliderValue.value++
+      } else {
+        clearInterval(playInterval)
+        isPlaying.value = false
+      }
+    }, 1000) // Change the interval as needed
+  } else {
+    console.log('Paused')
+    clearInterval(playInterval)
+  }
+}
 </script>
 
 <template>
   <h4>
+    <button @click="togglePlay">{{ isPlaying ? 'Pause' : 'Play' }}</button>
     <input type="range" min="0" v-model="sliderValue" style="width: 500px" ref="slider" />
     <label ref="timeLabel" style="margin-left: 8px">time</label>
   </h4>
-  <canvas ref="canvasElement" width="1920" height="1080" />
+  <canvas ref="canvasElement" style="width: 90%; height: 90%" />
 </template>
+
+<style>
+button {
+  margin-right: 10px;
+}
+</style>
