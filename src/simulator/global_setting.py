@@ -45,7 +45,7 @@ class GlobalSetting:
         workshop_stats = {
             workshop_track.name
             + "IdleTime": self.env.now
-            - workshop_track.non_idle_time
+            - workshop_track.get_non_idle_time()
             for workshop_track in self.tracks.workshop_tracks
         }
         curr_time = self.env.now if self.env.now != 0 else 1
@@ -93,4 +93,5 @@ if __name__ == "__main__":
         }
     }
     setting = GlobalSetting(Config(data["configuration"]))
+    print("yes")
     # setting.save_log_json()
