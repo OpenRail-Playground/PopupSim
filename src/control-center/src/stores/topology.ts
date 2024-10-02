@@ -17,7 +17,7 @@ export const useTopologyStore = defineStore('topology', () => {
 
   async function loadTopology() {
     if (!topology.value) {
-      const fileContent = await fetch('/topology.yaml')
+      const fileContent = await fetch(`${import.meta.env.BASE_URL}topology.yaml`)
       topology.value = parse(await fileContent.text())
       popupSite.value = topology.value.popupSites[0]
     }
