@@ -25,10 +25,6 @@ class Locomotive(object):
         }
 
     def run(self):
-
-        self.env.process(
-            self.global_setting.tracks.workshop_tracks[1].change_coupling_system()
-        )
         while self.global_setting.tracks.toBeRetrofitted.wagons + list(
             itertools.chain.from_iterable(
                 [track.wagons for track in self.global_setting.tracks.workshop_tracks]

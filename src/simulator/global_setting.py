@@ -26,18 +26,7 @@ class GlobalSetting:
         for i in range(self.conf.number_of_wagons):
             self.wagons.append(Wagon(self.env, i))
 
-        for i in range(self.conf.workshop_size):
-            self.wagons[i].couplerType = "dac"
-
-        # add wagons to tracks
-        for i in range(self.conf.number_of_workshops):
-            self.tracks.workshop_tracks[i].wagons = self.wagons[
-                i * self.conf.workshop_size : (i + 1) * self.conf.workshop_size
-            ]
-            # self.tracks.workshop_tracks[1].wagons = self.wagons[self.conf.workshop_size:self.conf.workshop_size*2]
-        self.tracks.toBeRetrofitted.wagons = self.wagons[
-            self.conf.number_of_workshops * self.conf.workshop_size :
-        ]
+        self.tracks.toBeRetrofitted.wagons = self.wagons
 
         # create locomotive
         self.locomotive = Locomotive(self.env, self, self.tracks.head_track, self.conf)
