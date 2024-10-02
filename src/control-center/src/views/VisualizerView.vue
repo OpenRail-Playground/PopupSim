@@ -24,7 +24,7 @@ var loadedJson = ''
 
 const sliderValue = ref(0)
 const isPlaying = ref(false)
-let playInterval: number | undefined = undefined
+let playInterval: ReturnType<typeof setInterval> | undefined
 
 onMounted(() => {
   // Get canvas context. If 'getContext' returns 'null', set to 'undefined', so that it conforms to the Ref typing
