@@ -86,11 +86,11 @@ function render() {
       break
     case 'WorkshopGleis2':
       locomotiveX = 633
-      locomotiveY = 750
+      locomotiveY = 500
       break
-    case 'retrofited':
-      locomotiveX = 633
-      locomotiveY = 289
+    case 'retrofitted':
+      locomotiveX = 773
+      locomotiveY = 729
       break
   }
 
@@ -128,14 +128,14 @@ function render() {
   //Werkstatt 1
   drawText(
     ctx,
-    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis0IdleTime,
+    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis1IdleTime,
     1000,
     270
   )
   //Werkstatt 2
   drawText(
     ctx,
-    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis1IdleTime,
+    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis2IdleTime,
     1000,
     510
   )

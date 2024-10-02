@@ -70,7 +70,7 @@ export type SimulationState = {
   timestamp: number
   tracks: Tracks
   WorkshopGleis1IdleTime: number
-  WorkshopGleis0IdleTime: number
+  WorkshopGleis2IdleTime: number
   locomotiveIdleTime: number
-  
+
 }
