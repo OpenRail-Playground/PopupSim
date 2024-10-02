@@ -25,13 +25,23 @@ class _WorkshopTrack(_Track):
         self.name = name
         self.wagons = []
         self.non_idle_time: int = 0
+        self.starting_time: int | None = None
         self.changing_time = changing_time
+        self.is_coupling = False
+
+    def get_non_idle_time(self):
+        if self.is_coupling:
+            return self.non_idle_time + self.env.now - self.starting_time
+        return self.non_idle_time
 
     def change_coupling_system(self):
-        self.non_idle_time += self.changing_time
+        self.starting_time = self.env.now
+        self.is_coupling = True
         yield self.env.timeout(self.changing_time)
         for wagon in self.wagons:
             wagon.couplerType = "dac"
+        self.is_coupling = False
+        self.non_idle_time += self.changing_time
         self.wagons_retrofitted += len(self.wagons)
 
     def wagons_have_coupling_system(self):
