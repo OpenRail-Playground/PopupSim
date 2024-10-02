@@ -5,3 +5,4 @@ venv_popupsim
 .coverage
 **/__pycache__/
 .idea/
+.python-version
