@@ -11,6 +11,7 @@ class Locomotive(object):
 
         self.id = id
         self.coupled_with = []
+        self.non_idle_time = 0
         self.cur_track = start_track
 
         # Start the run process everytime an instance is created.
@@ -41,10 +42,11 @@ class Locomotive(object):
             else:
                 print("waiting")
                 yield self.env.timeout(self.conf.loco_wait_time)
+        self.global_setting.final_time = self.env.now
 
     def run_routine(self, workshop_track):
-
-        print("Starting in Kopf %d" % self.env.now)
+        starting_time = self.env.now
+        print("Starting in Kopf %d" % starting_time)
         self.global_setting.log_global_state()
 
         # drive to workshop
@@ -77,6 +79,8 @@ class Locomotive(object):
         # drive from b1 to kopf
 
         yield self.env.process(self.drive_to(self.global_setting.tracks.head_track))
+
+        self.non_idle_time += self.env.now - starting_time
 
         self.global_setting.log_global_state()
 

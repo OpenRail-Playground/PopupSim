@@ -17,6 +17,14 @@ class Config:
         self.coupling_time: int = conf["parameters"]["coupling"]
 
         self.number_of_wagons: int = 20
-        self.number_of_workshops: int = 2
         self.workshop_size: int = 3
         self.loco_wait_time: int = 5
+
+        # other:
+
+        self.num_pop_up_site: int = conf["popupSite"]
+        self.workshop_track_names = conf["workshops"]
+        self.retrofitted_track_name = conf["retrofitted"][0]
+        self.toberetrofitted_track_name = conf["toBeRetrofitted"][0]
+        self.stationhead_name = conf["stationHead"][0]
+        self.parking_names = conf["parking"]

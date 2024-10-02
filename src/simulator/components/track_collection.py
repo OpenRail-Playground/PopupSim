@@ -22,9 +22,11 @@ class _WorkshopTrack(_Track):
         self.env = env
         self.name = name
         self.wagons = []
+        self.non_idle_time: int = 0
         self.changing_time = changing_time
 
     def change_coupling_system(self):
+        self.non_idle_time += self.changing_time
         yield self.env.timeout(self.changing_time)
         for wagon in self.wagons:
             wagon.couplerType = "dac"
@@ -43,7 +45,7 @@ class TrackCollection(_Track):
         self.toBeRetrofitted = _Track(env, "toBeRetrofitted")
         self.workshop_tracks = [
             _WorkshopTrack(env, f"WorkshopGleis{i}", conf.workshop_duration)
-            for i in range(conf.number_of_workshops)
+            for i, _ in enumerate(conf.workshop_track_names)
         ]
 
     def log(self):
