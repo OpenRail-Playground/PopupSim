@@ -24,7 +24,7 @@ var loadedJson = ''
 
 const sliderValue = ref(0)
 const isPlaying = ref(false)
-let playInterval: number | undefined = undefined
+let playInterval: ReturnType<typeof setInterval> | undefined
 
 onMounted(() => {
   // Get canvas context. If 'getContext' returns 'null', set to 'undefined', so that it conforms to the Ref typing
@@ -48,7 +48,7 @@ function render() {
   ctx.canvas.width = 1920
   ctx.canvas.height = 1000
 
-  ctx.fillStyle = '#f3f4ff'
+  ctx.fillStyle = '#fefefe'
   ctx.fillRect(0, 0, canvasElement.value!.width, canvasElement.value!.height)
 
   //draw background
@@ -117,12 +117,30 @@ function render() {
 
   timeLabel.value.innerText = `Vergangene Zeit (Minuten): ${simulation.value[currentStep].timestamp}`
 
-  //draw labels for the tracks and KPIs
+  //draw labels for the tracks
   drawText(ctx, 'Kopf', 68, 270)
   drawText(ctx, 'Nachzurüsten', 633, 37)
   drawText(ctx, 'Werkstatt Gleis 1', 633, 270)
   drawText(ctx, 'Werkstatt Gleis 2', 633, 510)
   drawText(ctx, 'Fertig', 833, 749)
+
+  //KPIs
+  //Werkstatt 1
+  drawText(
+    ctx,
+    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis0IdleTime,
+    1000,
+    270
+  )
+  //Werkstatt 2
+  drawText(
+    ctx,
+    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis1IdleTime,
+    1000,
+    510
+  )
+  //locomotiveIdleTime
+  drawText(ctx, 'Untätig (Summe): ' + simulation.value[currentStep].locomotiveIdleTime, 68, 210)
 }
 
 function drawWagons(ctx, wagons, startX, startY, defaultColor) {
@@ -168,7 +186,7 @@ function togglePlay() {
         clearInterval(playInterval)
         isPlaying.value = false
       }
-    }, 1000) // Change the interval as needed
+    }, 300) // Change the interval as needed
   } else {
     console.log('Paused')
     clearInterval(playInterval)
