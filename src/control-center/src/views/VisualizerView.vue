@@ -186,7 +186,7 @@ function togglePlay() {
         clearInterval(playInterval)
         isPlaying.value = false
       }
-    }, 300) // Change the interval as needed
+    }, 200) // Change the interval as needed
   } else {
     console.log('Paused')
     clearInterval(playInterval)
