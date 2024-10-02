@@ -20,7 +20,6 @@ const wagonColorToBeRetrofitted = 'vagon-blue.png'
 const wagonColorRetrofitted = 'vagon-green.png'
 const wagonColorInWorkshop = 'vagon-yellow.png'
 
-
 var loadedJson = ''
 
 const sliderValue = ref(0)
@@ -61,6 +60,7 @@ function render() {
     console.log('simulation not loaded yet')
     return
   }
+  slider.value.max = (simulation.value.length - 1).toString()
 
   //all images are 128x128
 
@@ -96,7 +96,13 @@ function render() {
   drawImage(ctx, 'steam-locomotive.png', locomotiveX, locomotiveY)
 
   //draw all wagons with appropriate colors
-  drawWagons(ctx, simulation.value[currentStep].tracks.toBeRetrofitted, 760, 38, wagonColorToBeRetrofitted)
+  drawWagons(
+    ctx,
+    simulation.value[currentStep].tracks.toBeRetrofitted,
+    760,
+    38,
+    wagonColorToBeRetrofitted
+  )
   drawWagons(ctx, simulation.value[currentStep].tracks.retrofitted, 900, 740, wagonColorRetrofitted)
 
   // Differentiate between workshop tracks
@@ -113,7 +119,7 @@ function render() {
 function drawWagons(ctx, wagons, startX, startY, defaultColor) {
   wagons.slice(0, 3).forEach((wagon, index) => {
     const color = wagon.couplerType === 'dac' ? wagonColorRetrofitted : defaultColor
-   // drawColoredRect(ctx, startX + index * 128, startY, color)
+    // drawColoredRect(ctx, startX + index * 128, startY, color)
     drawImage(ctx, color, startX + index * 128, startY)
   })
 
@@ -144,14 +150,7 @@ function drawText(ctx, text, x, y) {
 
 <template>
   <h4>
-    <input
-    type="range"
-    min="0"
-    :max="simulationStore.length - 1"
-    v-model="sliderValue"
-    style="width: 500px"
-    ref="slider"
-  />
+    <input type="range" min="0" v-model="sliderValue" style="width: 500px" ref="slider" />
     <label ref="timeLabel" style="margin-left: 8px">time</label>
   </h4>
   <canvas ref="canvasElement" width="1920" height="1080" />

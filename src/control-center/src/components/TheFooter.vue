@@ -14,7 +14,7 @@
         </RouterLink>
       </li>
     </ul>
-    Copyright 2022 DB Systel
+    Copyright 2024
   </footer>
 </template>
 
