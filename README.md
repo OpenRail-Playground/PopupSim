@@ -8,6 +8,10 @@ The backend cannot be easily deployed with additional infrastructure, see [Insta
 
 ![Overview of the user flow](img/overview.png)
 
+## Architecture
+
+![Overview of the architecture](img/architecture.png)
+
 
 ## Background
 
