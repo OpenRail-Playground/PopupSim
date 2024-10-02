@@ -14,9 +14,11 @@ class GlobalSetting(object):
         self.env = simpy.Environment()
         self.conf = conf
         self.global_log = []
+        self.final_time: int | None = None
 
         self.setup_scenario()
         self.env.run(until=1500)
+        print(self.calculate_kpis())
 
     def setup_scenario(self):
         self.tracks = TrackCollection(self.env, self.conf)
@@ -52,6 +54,18 @@ class GlobalSetting(object):
             }
         )
 
+    def calculate_kpis(self):
+        workshop_stats = {
+            workshop_track.name: self.final_time - workshop_track.non_idle_time
+            for workshop_track in self.tracks.workshop_tracks
+        }
+        workshop_stats.update(
+            {
+                "locomotive_idle_time": self.final_time - self.locomotive.non_idle_time,
+            }
+        )
+        return workshop_stats
+
     def get_available_workshop(self):
         for track in self.tracks.workshop_tracks:
             if track.wagons_have_coupling_system():
@@ -64,10 +78,21 @@ class GlobalSetting(object):
 
 
 if __name__ == "__main__":
-    settings_dict = {"parameters": {}}
-    settings_dict["parameters"]["workshop"] = 180
-    settings_dict["parameters"]["shuntingMovement"] = 8
-    settings_dict["parameters"]["movement"] = 5
-    settings_dict["parameters"]["coupling"] = 8
-    setting = GlobalSetting(Config(settings_dict))
-    setting.save_log_json()
+    data = {
+        "configuration": {
+            "popupSite": 1,
+            "workshops": ["z1", "10"],
+            "retrofitted": ["7"],
+            "toBeRetrofitted": ["6"],
+            "stationHead": ["1A"],
+            "parking": ["8", "9", "17", "18", "19", "22", "23", "24"],
+            "parameters": {
+                "workshop": 180,
+                "shuntingMovement": 8,
+                "movement": 5,
+                "coupling": 8,
+            },
+        }
+    }
+    setting = GlobalSetting(Config(data["configuration"]))
+    # setting.save_log_json()
