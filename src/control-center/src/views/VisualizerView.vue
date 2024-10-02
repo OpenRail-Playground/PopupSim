@@ -115,7 +115,7 @@ function render() {
     })
   })
 
-  timeLabel.value.innerText = `Zeit (Minuten): ${simulation.value[currentStep].timestamp}`
+  timeLabel.value.innerText = `Vergangene Zeit (Minuten): ${simulation.value[currentStep].timestamp}`
 
   //draw labels for the tracks and KPIs
   drawText(ctx, 'Kopf', 68, 270)
