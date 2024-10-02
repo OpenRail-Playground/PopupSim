@@ -66,7 +66,7 @@ function simulate() {
     <button class="elm-button" data-variant="brand-primary" title="Simulieren" @click="simulate()">
       Simulieren
     </button>
-    <button class="elm-button" data-variant="brand-secondary" title="Statische Daten laden" @click="loadStaticData()">
+    <button class="elm-button" data-variant="secondary-solid" title="Statische Daten laden" @click="loadStaticData()">
       Statische Daten laden
     </button>
   </div>
