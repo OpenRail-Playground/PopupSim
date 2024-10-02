@@ -9,7 +9,7 @@
 - [x] Call API and store response
 - [x] Add number of waggons per workshop
 - [x] route to visualizer
-- [ ] Deploy frontend to GitHub Pages
+- [x] Deploy frontend to GitHub Pages
 - [ ] Save config in local storage
 
 
