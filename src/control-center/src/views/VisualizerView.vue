@@ -118,11 +118,11 @@ function render() {
   timeLabel.value.innerText = `Vergangene Zeit (Minuten): ${simulation.value[currentStep].timestamp}`
 
   //draw labels for the tracks
-  drawText(ctx, 'Kopf', 68, 270)
-  drawText(ctx, 'Nachzurüsten', 633, 37)
+  drawText(ctx, 'Bahnhofskopf', 68, 270)
+  drawText(ctx, 'Umzubauende Wagen', 633, 37)
   drawText(ctx, 'Werkstatt Gleis 1', 633, 270)
   drawText(ctx, 'Werkstatt Gleis 2', 633, 510)
-  drawText(ctx, 'Fertig', 833, 749)
+  drawText(ctx, 'Umgebaute Wagen', 833, 749)
 
   //KPIs
   //Werkstatt 1
