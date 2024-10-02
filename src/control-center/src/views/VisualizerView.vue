@@ -116,6 +116,13 @@ function render() {
   })
 
   timeLabel.value.innerText = `time: ${simulation.value[currentStep].timestamp}`
+
+  //draw labels for the tracks and KPIs
+  drawText(ctx, 'Kopf', 68, 270) //ok
+  drawText(ctx, 'Nicht Fertig', 633, 37) //ok
+  drawText(ctx, 'WorkshopGleis1', 633, 270) //ok
+  drawText(ctx, 'WorkshopGleis2', 633, 510) //ok
+  drawText(ctx, 'Nachgerüstet', 833, 749) //ok
 }
 
 function drawWagons(ctx, wagons, startX, startY, defaultColor) {
@@ -175,7 +182,7 @@ function togglePlay() {
     <input type="range" min="0" v-model="sliderValue" style="width: 500px" ref="slider" />
     <label ref="timeLabel" style="margin-left: 8px">time</label>
   </h4>
-  <canvas ref="canvasElement" style="width:90%; height:90%" />
+  <canvas ref="canvasElement" style="width: 90%; height: 90%" />
 </template>
 
 <style>
