@@ -153,5 +153,5 @@ function drawText(ctx, text, x, y) {
     <input type="range" min="0" v-model="sliderValue" style="width: 500px" ref="slider" />
     <label ref="timeLabel" style="margin-left: 8px">time</label>
   </h4>
-  <canvas ref="canvasElement" width="1920" height="1080" />
+  <canvas ref="canvasElement" style="width:90%; height:90%" />
 </template>
