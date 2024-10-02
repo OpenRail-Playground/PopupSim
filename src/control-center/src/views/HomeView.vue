@@ -19,6 +19,10 @@ onBeforeMount(async () => {
   await ts.loadTopology()
 })
 
+function loadStaticData() {
+  router.push({ path: '/visualizer' })
+}
+
 function simulate() {
   function findTracksOfFunction(functionAssignment: Function): string[] {
     return popupSite.value.tracks.filter((t) => t.function === functionAssignment).map((t) => t.id)
@@ -61,6 +65,9 @@ function simulate() {
     </div>
     <button class="elm-button" data-variant="brand-primary" title="Simulieren" @click="simulate()">
       Simulieren
+    </button>
+    <button class="elm-button" data-variant="brand-secondary" title="Statische Daten laden" @click="loadStaticData()">
+      Statische Daten laden
     </button>
   </div>
 </template>
