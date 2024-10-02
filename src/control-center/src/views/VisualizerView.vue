@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, type Ref, ref, watch } from 'vue'
-import sample_simulation_output from '../../data.json'
 import { useSimulationStore } from '@/stores/simulation'
 import { storeToRefs } from 'pinia'
 
@@ -15,6 +14,12 @@ var lastLocomotivePosition = 'unknown' // Default initial position
 const canvasElement: Ref<HTMLCanvasElement | undefined> = ref()
 const context: Ref<CanvasRenderingContext2D | undefined> = ref()
 const slider: Ref<HTMLInputElement | undefined> = ref()
+const timeLabel: Ref = ref()
+
+const wagonColorToBeRetrofitted = 'vagon-blue.png'
+const wagonColorRetrofitted = 'vagon-green.png'
+const wagonColorInWorkshop = 'vagon-yellow.png'
+
 
 var loadedJson = ''
 
@@ -52,11 +57,15 @@ function render() {
     ctx.drawImage(baseImage, 0, 0)
   }
   //setup slider
+  if (!isSimulationFinished.value) {
+    console.log('simulation not loaded yet')
+    return
+  }
 
   //all images are 128x128
 
   // Get locomotive track position
-  const locomotiveTrack = sample_simulation_output[currentStep].locomotive.position
+  const locomotiveTrack = simulation.value[currentStep].locomotive.position
   let locomotiveX = 340
   let locomotiveY = 270
 
@@ -87,25 +96,25 @@ function render() {
   drawImage(ctx, 'steam-locomotive.png', locomotiveX, locomotiveY)
 
   //draw all wagons with appropriate colors
-  drawWagons(ctx, sample_simulation_output[currentStep].tracks.toBeRetrofitted, 760, 38, 'blue')
-  drawWagons(ctx, sample_simulation_output[currentStep].tracks.retrofitted, 900, 740, 'green')
+  drawWagons(ctx, simulation.value[currentStep].tracks.toBeRetrofitted, 760, 38, wagonColorToBeRetrofitted)
+  drawWagons(ctx, simulation.value[currentStep].tracks.retrofitted, 900, 740, wagonColorRetrofitted)
 
   // Differentiate between workshop tracks
-  sample_simulation_output[currentStep].tracks.workshopGleise.forEach(
-    (workshopGleis, workshopIndex) => {
-      Object.keys(workshopGleis).forEach((key) => {
-        let yPosition = workshopIndex === 0 ? 278 : 503 // Differentiate y-position for WorkshopGleis1 and WorkshopGleis2
-        drawWagons(ctx, workshopGleis[key], 760, yPosition, 'yellow')
-      })
-    }
-  )
+  simulation.value[currentStep].tracks.workshopGleise.forEach((workshopGleis, workshopIndex) => {
+    Object.keys(workshopGleis).forEach((key) => {
+      let yPosition = workshopIndex === 0 ? 278 : 503 // Differentiate y-position for WorkshopGleis1 and WorkshopGleis2
+      drawWagons(ctx, workshopGleis[key], 760, yPosition, wagonColorInWorkshop)
+    })
+  })
+
+  timeLabel.value.innerText = `time: ${simulation.value[currentStep].timestamp}`
 }
 
 function drawWagons(ctx, wagons, startX, startY, defaultColor) {
   wagons.slice(0, 3).forEach((wagon, index) => {
-    const color = wagon.couplerType === 'dac' ? 'green' : defaultColor
-    drawColoredRect(ctx, startX + index * 128, startY, color)
-    drawImage(ctx, 'vagon.png', startX + index * 128, startY)
+    const color = wagon.couplerType === 'dac' ? wagonColorRetrofitted : defaultColor
+   // drawColoredRect(ctx, startX + index * 128, startY, color)
+    drawImage(ctx, color, startX + index * 128, startY)
   })
 
   if (wagons.length > 3) {
@@ -134,15 +143,16 @@ function drawText(ctx, text, x, y) {
 </script>
 
 <template>
-  {{ isSimulationRequested }}
-  {{ isSimulationFinished }}
-  <input
+  <h4>
+    <input
     type="range"
     min="0"
-    :max="sample_simulation_output.length - 1"
+    :max="simulationStore.length - 1"
     v-model="sliderValue"
     style="width: 500px"
     ref="slider"
   />
+    <label ref="timeLabel" style="margin-left: 8px">time</label>
+  </h4>
   <canvas ref="canvasElement" width="1920" height="1080" />
 </template>
