@@ -8,6 +8,10 @@ The backend cannot be easily deployed with additional infrastructure, see [Insta
 
 ![overview.png](img/overview.png)
 
+## Architecture
+
+![architecture.png](img/architecture.png)
+
 ## Background
 
 <p align="center">
