@@ -23,6 +23,8 @@ const wagonColorInWorkshop = 'vagon-yellow.png'
 var loadedJson = ''
 
 const sliderValue = ref(0)
+const isPlaying = ref(false)
+let playInterval: number | undefined = undefined
 
 onMounted(() => {
   // Get canvas context. If 'getContext' returns 'null', set to 'undefined', so that it conforms to the Ref typing
@@ -146,12 +148,38 @@ function drawText(ctx, text, x, y) {
   ctx.font = '30px Arial'
   ctx.fillText(text, x, y)
 }
+
+// Function to handle play button click
+function togglePlay() {
+  isPlaying.value = !isPlaying.value
+  if (isPlaying.value) {
+    console.log('Playing...')
+    playInterval = setInterval(() => {
+      if (sliderValue.value < simulation.value.length - 1) {
+        sliderValue.value++
+      } else {
+        clearInterval(playInterval)
+        isPlaying.value = false
+      }
+    }, 1000) // Change the interval as needed
+  } else {
+    console.log('Paused')
+    clearInterval(playInterval)
+  }
+}
 </script>
 
 <template>
   <h4>
+    <button @click="togglePlay">{{ isPlaying ? 'Pause' : 'Play' }}</button>
     <input type="range" min="0" v-model="sliderValue" style="width: 500px" ref="slider" />
     <label ref="timeLabel" style="margin-left: 8px">time</label>
   </h4>
   <canvas ref="canvasElement" style="width:90%; height:90%" />
 </template>
+
+<style>
+button {
+  margin-right: 10px;
+}
+</style>
