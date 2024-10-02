@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 let licensesTxt = ref<string>()
 
 onMounted(async () => {
-  fetch(`/dependencies.txt`)
+  fetch(`${import.meta.env.BASE_URL}/dependencies.txt`)
     .then((response) => response.text())
     .then((res) => {
       licensesTxt.value = res

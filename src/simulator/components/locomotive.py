@@ -40,8 +40,7 @@ class Locomotive(object):
                 yield self.env.timeout(self.conf.loco_wait_time)
 
     def run_routine(self, workshop_track):
-        starting_time = self.env.now
-        print("Starting in Kopf %d" % starting_time)
+        print("Starting in Kopf %d" % self.env.now)
         self.global_setting.log_global_state()
 
         # drive to workshop
@@ -75,22 +74,24 @@ class Locomotive(object):
 
         yield self.env.process(self.drive_to(self.global_setting.tracks.head_track))
 
-        self.non_idle_time += self.env.now - starting_time
-
         self.global_setting.log_global_state()
 
     def coupling(self, duration=5):
+        starting_time = self.env.now
         print("start coupling %d" % self.env.now)
         yield self.env.timeout(duration)
         self.coupled_with += self.cur_track.wagons[:3]
+        self.non_idle_time += self.env.now - starting_time
         print("finished coupling %d" % self.env.now)
 
         self.global_setting.log_global_state()
 
     def uncoupling(self, duration=5):
+        starting_time = self.env.now
         print("start uncoupling %d" % self.env.now)
         yield self.env.timeout(duration)
         self.coupled_with = []
+        self.non_idle_time += self.env.now - starting_time
         print("finished uncoupling %d" % self.env.now)
         self.global_setting.log_global_state()
 
@@ -98,6 +99,7 @@ class Locomotive(object):
         print(
             f"start driving from {self.cur_track.name} to {target_track.name} - {self.env.now}"
         )
+        starting_time = self.env.now
 
         # compute driving time
         driving_time = (
@@ -116,6 +118,7 @@ class Locomotive(object):
 
         # change track of locomotive
         self.cur_track = target_track
+        self.non_idle_time += self.env.now - starting_time
 
         print(f"arrived {target_track.name} - {self.env.now}")
         self.global_setting.log_global_state()
