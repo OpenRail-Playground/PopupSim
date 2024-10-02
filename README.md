@@ -8,9 +8,6 @@ The backend cannot be easily deployed with additional infrastructure, see [Insta
 
 ![Overview of the user flow](img/overview.png)
 
-## Architecture
-
-![Overview of the architecture](img/architecture.drawio.png)
 
 ## Background
 
@@ -34,6 +31,10 @@ need to be parked as quickly as possible.
 This requires tracks, personnel, and shunting resources.
 This phase must be planned very precisely, and experts are keenly discussing how it can succeed.
 Therefore, the challenge is to build a microscopic simulation tool for this purpose.
+
+## Architecture
+
+![Overview of the architecture](img/architecture.drawio.png)
 
 ## Install
 
