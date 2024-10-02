@@ -120,8 +120,8 @@ function render() {
   //draw labels for the tracks and KPIs
   drawText(ctx, 'Kopf', 68, 270)
   drawText(ctx, 'Nachzurüsten', 633, 37)
-  drawText(ctx, 'Weerkstatt Gleis 1', 633, 270)
-  drawText(ctx, 'Weerkstatt Gleis 2', 633, 510)
+  drawText(ctx, 'Werkstatt Gleis 1', 633, 270)
+  drawText(ctx, 'Werkstatt Gleis 2', 633, 510)
   drawText(ctx, 'Fertig', 833, 749)
 }
 
