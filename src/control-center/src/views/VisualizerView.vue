@@ -118,11 +118,11 @@ function render() {
   timeLabel.value.innerText = `time: ${simulation.value[currentStep].timestamp}`
 
   //draw labels for the tracks and KPIs
-  drawText(ctx, 'Kopf', 68, 270) //ok
-  drawText(ctx, 'Nicht Fertig', 633, 37) //ok
-  drawText(ctx, 'WorkshopGleis1', 633, 270) //ok
-  drawText(ctx, 'WorkshopGleis2', 633, 510) //ok
-  drawText(ctx, 'Nachgerüstet', 833, 749) //ok
+  drawText(ctx, 'Kopf', 68, 270)
+  drawText(ctx, 'Nachzurüsten', 633, 37)
+  drawText(ctx, 'Weerkstatt Gleis 1', 633, 270)
+  drawText(ctx, 'Weerkstatt Gleis 2', 633, 510)
+  drawText(ctx, 'Fertig', 833, 749)
 }
 
 function drawWagons(ctx, wagons, startX, startY, defaultColor) {
