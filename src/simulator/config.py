@@ -6,7 +6,7 @@ class Config:
     coupling_time: int = 8
     number_of_wagons: int = 20
     number_of_workshops: int = 2
-    workshop_size: int = 3
+    wagons_per_workshop: int = 3
     loco_wait_time: int = 5
 
     def __init__(self, conf):
@@ -17,7 +17,7 @@ class Config:
         self.coupling_time: int = conf["parameters"]["coupling"]
 
         self.number_of_wagons: int = 20
-        self.workshop_size: int = 3
+        self.wagons_per_workshop: int = conf["parameters"]["wagonsPerWorkshop"]
         self.loco_wait_time: int = 5
 
         # other:

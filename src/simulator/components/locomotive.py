@@ -30,47 +30,55 @@ class Locomotive(object):
                 [track.wagons for track in self.global_setting.tracks.workshop_tracks]
             )
         ):
-
-            available_workshop = self.global_setting.get_available_workshop()
-            if available_workshop:
-                yield self.env.process(self.run_routine(available_workshop))
-                self.env.process(available_workshop.change_coupling_system())
+            if self.global_setting.get_empty_workshop() and self.global_setting.tracks.toBeRetrofitted.wagons:
+                starting_workshop = self.global_setting.get_empty_workshop()
+                print("startup phase with workshop %s" % starting_workshop.name)
+                yield self.env.process(self.run_routine(starting_workshop))
+                self.env.process(starting_workshop.change_coupling_system())
             else:
-                print("waiting")
-                yield self.env.timeout(self.conf.loco_wait_time)
+                available_workshop = self.global_setting.get_available_workshop()
+                if available_workshop:
+                    yield self.env.process(self.run_routine(available_workshop))
+                    self.env.process(available_workshop.change_coupling_system())
+                else:
+                    print("waiting")
+                    yield self.env.timeout(self.conf.loco_wait_time)
+
 
     def run_routine(self, workshop_track):
         print("Starting in Kopf %d" % self.env.now)
         self.global_setting.log_global_state()
+        if workshop_track.wagons:
+          # drive to workshop
+          yield self.env.process(self.drive_to(workshop_track))
 
-        # drive to workshop
-        yield self.env.process(self.drive_to(workshop_track))
+          # get wagons
+          yield self.env.process(self.coupling())
 
-        # get wagons
-        yield self.env.process(self.coupling())
+          # drive to C
+          yield self.env.process(self.drive_to(self.global_setting.tracks.retrofitted))
 
-        # drive to C
-        yield self.env.process(self.drive_to(self.global_setting.tracks.retrofitted))
-
-        # uncoupling
-        yield self.env.process(self.uncoupling())
+          # uncoupling
+          yield self.env.process(self.uncoupling())
 
         # drive to from C to a
-        yield self.env.process(
-            self.drive_to(self.global_setting.tracks.toBeRetrofitted)
-        )
+        if self.global_setting.tracks.toBeRetrofitted.wagons:
+          yield self.env.process(
+              self.drive_to(self.global_setting.tracks.toBeRetrofitted)
+          )
 
-        # coupling
-        yield self.env.process(self.coupling())
+          # coupling
+          yield self.env.process(self.coupling())
 
-        # drive from a to b1
+          # drive from a to b1
 
-        yield self.env.process(self.drive_to(workshop_track))
+          yield self.env.process(self.drive_to(workshop_track))
 
-        # uncoupling
-        yield self.env.process(self.uncoupling())
+          # uncoupling
+          yield self.env.process(self.uncoupling())
 
-        # drive from b1 to kopf
+          # drive from b1 to kopf
+
 
         yield self.env.process(self.drive_to(self.global_setting.tracks.head_track))
 
@@ -80,7 +88,7 @@ class Locomotive(object):
         starting_time = self.env.now
         print("start coupling %d" % self.env.now)
         yield self.env.timeout(duration)
-        self.coupled_with += self.cur_track.wagons[:3]
+        self.coupled_with += self.cur_track.wagons[:self.conf.wagons_per_workshop]
         self.non_idle_time += self.env.now - starting_time
         print("finished coupling %d" % self.env.now)
 

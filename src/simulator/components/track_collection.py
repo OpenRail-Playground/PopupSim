@@ -37,6 +37,7 @@ class _WorkshopTrack(_Track):
     def change_coupling_system(self):
         self.starting_time = self.env.now
         self.is_coupling = True
+        print("change coupling in", self.name, " - ", self.env.now)
         yield self.env.timeout(self.changing_time)
         for wagon in self.wagons:
             wagon.couplerType = "dac"
@@ -45,6 +46,8 @@ class _WorkshopTrack(_Track):
         self.wagons_retrofitted += len(self.wagons)
 
     def wagons_have_coupling_system(self):
+        if not self.wagons:
+            return False
         for wagon in self.wagons:
             if wagon.couplerType != "dac":
                 return False

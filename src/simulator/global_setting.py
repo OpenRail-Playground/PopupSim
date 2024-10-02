@@ -70,6 +70,12 @@ class GlobalSetting:
                 return track
         return None
 
+    def get_empty_workshop(self):
+        for track in self.tracks.workshop_tracks:
+            if not track.wagons:
+                return track
+        return None
+
     def save_log_json(self):
         with open("data.json", "w") as fp:
             json.dump(self.global_log, fp, indent=4)
