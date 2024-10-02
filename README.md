@@ -33,7 +33,7 @@ Therefore, the challenge is to build a microscopic simulation tool for this purp
 
 ## Architecture
 
-![Overview of the architecture](img/architecture.drawio.pn)
+![Overview of the architecture](img/architecture.drawio.png)
 
 ## Install
 
