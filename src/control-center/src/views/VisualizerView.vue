@@ -48,7 +48,7 @@ function render() {
   ctx.canvas.width = 1920
   ctx.canvas.height = 1000
 
-  ctx.fillStyle = '#f3f4ff'
+  ctx.fillStyle = '#fefefe'
   ctx.fillRect(0, 0, canvasElement.value!.width, canvasElement.value!.height)
 
   //draw background
