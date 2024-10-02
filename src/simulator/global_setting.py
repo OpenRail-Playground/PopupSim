@@ -8,17 +8,15 @@ from simulator.components.wagon import Wagon
 from simulator.config import Config
 
 
-class GlobalSetting(object):
+class GlobalSetting:
 
     def __init__(self, conf: Config):
         self.env = simpy.Environment()
         self.conf = conf
         self.global_log = []
-        self.final_time: int | None = None
 
         self.setup_scenario()
         self.env.run(until=1500)
-        print(self.calculate_kpis())
 
     def setup_scenario(self):
         self.tracks = TrackCollection(self.env, self.conf)
@@ -45,23 +43,34 @@ class GlobalSetting(object):
         self.locomotive = Locomotive(self.env, self, self.tracks.head_track, self.conf)
 
     def log_global_state(self):
+        track_state = {
+            "locomotive": self.locomotive.log(),
+            "timestamp": self.env.now,
+            "tracks": self.tracks.log(),
+        }
+        track_state.update(self.calculate_kpis())
 
-        self.global_log.append(
-            {
-                "locomotive": self.locomotive.log(),
-                "timestamp": self.env.now,
-                "tracks": self.tracks.log(),
-            }
-        )
+        self.global_log.append(track_state)
 
     def calculate_kpis(self):
         workshop_stats = {
-            workshop_track.name: self.final_time - workshop_track.non_idle_time
+            workshop_track.name
+            + "IdleTime": self.env.now
+            - workshop_track.non_idle_time
             for workshop_track in self.tracks.workshop_tracks
         }
+        curr_time = self.env.now if self.env.now != 0 else 1
+        workshop_stats.update(
+            {k + "Relative": v / curr_time for k, v in workshop_stats.items()}
+        )
         workshop_stats.update(
             {
-                "locomotive_idle_time": self.final_time - self.locomotive.non_idle_time,
+                "locomotiveIdleTime": self.env.now - self.locomotive.non_idle_time,
+                "locomotiveIdleTimeRelative": (
+                    self.env.now - self.locomotive.non_idle_time
+                )
+                / curr_time,
+                "wagonsRetrofittedTotal": len(self.tracks.retrofitted.wagons),
             }
         )
         return workshop_stats

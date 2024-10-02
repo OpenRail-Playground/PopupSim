@@ -1,10 +1,8 @@
 from typing import Any
 
 from fastapi import FastAPI
-from fastapi import HTTPException
-from fastapi import Request
-from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from simulator.config import Config
@@ -13,11 +11,12 @@ from simulator.global_setting import GlobalSetting
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:8080'],
+    allow_origins=["http://localhost:8080"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Define a Pydantic model to validate the incoming JSON body
 class DataModel(BaseModel):

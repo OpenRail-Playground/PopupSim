@@ -18,6 +18,8 @@ class _Track:
 
 
 class _WorkshopTrack(_Track):
+    wagons_retrofitted: int = 0
+
     def __init__(self, env, name, changing_time: int):
         self.env = env
         self.name = name
@@ -30,6 +32,7 @@ class _WorkshopTrack(_Track):
         yield self.env.timeout(self.changing_time)
         for wagon in self.wagons:
             wagon.couplerType = "dac"
+        self.wagons_retrofitted += len(self.wagons)
 
     def wagons_have_coupling_system(self):
         for wagon in self.wagons:

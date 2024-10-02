@@ -42,7 +42,6 @@ class Locomotive(object):
             else:
                 print("waiting")
                 yield self.env.timeout(self.conf.loco_wait_time)
-        self.global_setting.final_time = self.env.now
 
     def run_routine(self, workshop_track):
         starting_time = self.env.now
