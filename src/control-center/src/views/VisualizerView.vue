@@ -38,7 +38,7 @@ watch(sliderValue, (newValue) => {
   render()
 })
 
-function render() {
+async function render() {
   if (!context.value) {
     return
   }
@@ -58,9 +58,16 @@ function render() {
     ctx.drawImage(baseImage, 0, 0)
   }
   //setup slider
-  if (!isSimulationFinished.value) {
+  if (isSimulationRequested.value && !isSimulationFinished.value) {
     console.log('simulation not loaded yet')
     return
+  } else if (!isSimulationRequested.value) {
+    //load file from disk
+    console.log('simulation not requested, using file from disk instead of the API')
+    if (loadedJson === '') {
+      const fileContent = await fetch(`${import.meta.env.BASE_URL}sample_simulation_output.json`)
+      simulation.value = await fileContent.json()
+    }
   }
   slider.value.max = (simulation.value.length - 1).toString()
 
