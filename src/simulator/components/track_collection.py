@@ -57,7 +57,7 @@ class TrackCollection(_Track):
         self.retrofitted = _Track(env, "retrofitted")
         self.toBeRetrofitted = _Track(env, "toBeRetrofitted")
         self.workshop_tracks = [
-            _WorkshopTrack(env, f"WorkshopGleis{i}", conf.workshop_duration)
+            _WorkshopTrack(env, f"WorkshopGleis{i + 1}", conf.workshop_duration)
             for i, _ in enumerate(conf.workshop_track_names)
         ]
 
