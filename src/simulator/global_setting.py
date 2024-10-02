@@ -93,5 +93,4 @@ if __name__ == "__main__":
         }
     }
     setting = GlobalSetting(Config(data["configuration"]))
-    print("yes")
     # setting.save_log_json()
