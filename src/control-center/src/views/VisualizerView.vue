@@ -53,7 +53,7 @@ function render() {
 
   //draw background
   var baseImage = new Image()
-  baseImage.src = 'rail_icons/edited.png'
+  baseImage.src = `${import.meta.env.BASE_URL}rail_icons/edited.png`
   baseImage.onload = function () {
     ctx.drawImage(baseImage, 0, 0)
   }
@@ -162,7 +162,7 @@ function drawColoredRect(ctx, x, y, color) {
 
 function drawImage(ctx, name, x, y) {
   const image = new Image()
-  image.src = `/rail_icons/${name}`
+  image.src = `${import.meta.env.BASE_URL}rail_icons/${name}`
   image.onload = function () {
     ctx.drawImage(this, x, y)
   }
