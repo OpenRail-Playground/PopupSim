@@ -49,9 +49,18 @@ class GlobalSetting:
             for workshop_track in self.tracks.workshop_tracks
         }
         curr_time = self.env.now if self.env.now != 0 else 1
+        # Add relative idle time
+        workshop_stats.update(
+            {
+                workshop_track.name + "CouplingTime": workshop_track.coupling_time
+                for workshop_track in self.tracks.workshop_tracks
+            }
+        )
+        # Add coupling time on workshop trains
         workshop_stats.update(
             {k + "Relative": v / curr_time for k, v in workshop_stats.items()}
         )
+        # Add locomotive idle time
         workshop_stats.update(
             {
                 "locomotiveIdleTime": self.env.now - self.locomotive.non_idle_time,
@@ -66,7 +75,9 @@ class GlobalSetting:
 
     def get_available_workshop(self):
         for track in self.tracks.workshop_tracks:
-            if track.wagons_have_coupling_system():
+            if track.wagons_have_coupling_system() | track.finished_in_driving_distance(
+                self.conf.movement_time
+            ):
                 return track
         return None
 

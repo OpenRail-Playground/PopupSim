@@ -7,6 +7,7 @@ class _Track:
         self.env = env
         self.name: str = name
         self.wagons: list = []
+        self.coupling_time: int = 0
 
     def log(self):
         return {
@@ -21,9 +22,7 @@ class _WorkshopTrack(_Track):
     wagons_retrofitted: int = 0
 
     def __init__(self, env, name, changing_time: int):
-        self.env = env
-        self.name = name
-        self.wagons = []
+        super().__init__(env, name)
         self.non_idle_time: int = 0
         self.starting_time: int | None = None
         self.changing_time = changing_time
@@ -42,6 +41,7 @@ class _WorkshopTrack(_Track):
         for wagon in self.wagons:
             wagon.couplerType = "dac"
         self.is_coupling = False
+        self.starting_time = None
         self.non_idle_time += self.changing_time
         self.wagons_retrofitted += len(self.wagons)
 
@@ -52,6 +52,15 @@ class _WorkshopTrack(_Track):
             if wagon.couplerType != "dac":
                 return False
         return True
+
+    def finished_in_driving_distance(self, driving_distance: int):
+        if self.starting_time is None:
+            return False
+        processing_time = self.env.now - self.starting_time
+        is_finished_in_driving_distance = (
+            self.changing_time - processing_time <= driving_distance
+        )
+        return is_finished_in_driving_distance
 
 
 class TrackCollection(_Track):

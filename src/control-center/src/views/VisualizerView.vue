@@ -135,14 +135,14 @@ async function render() {
   //Werkstatt 1
   drawText(
     ctx,
-    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis1IdleTime,
+    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis1IdleTime + ' Davon Kupplungszeit: ' + simulation.value[currentStep].WorkshopGleis1CouplingTime,
     1000,
     270
   )
   //Werkstatt 2
   drawText(
     ctx,
-    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis2IdleTime,
+    'Untätig (Summe seit Start): ' + simulation.value[currentStep].WorkshopGleis2IdleTime + ' Davon Kupplungszeit: ' + simulation.value[currentStep].WorkshopGleis2CouplingTime,
     1000,
     510
   )
