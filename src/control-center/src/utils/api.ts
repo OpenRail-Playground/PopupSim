@@ -71,6 +71,7 @@ export type SimulationState = {
   tracks: Tracks
   WorkshopGleis1IdleTime: number
   WorkshopGleis2IdleTime: number
+  WorkshopGleis1CouplingTime: number
+  WorkshopGleis2CouplingTime: number
   locomotiveIdleTime: number
-
 }
