@@ -1,3 +1,6 @@
+> [!WARNING]
+> This repository has been archived. It is no longer maintained and no contributions are accepted. The code is provided as-is for reference purposes.
+
 # PopUpSim
 
 PopUpSim is a simulation tool, that models a problem in the freight rail transport industry. The Control Center allows the user to assign functions to a predefined (but modifiable) topology of tracks. The user can then choose a set of model parameters and run a simulation. The simulator will take the parameters and simulate the retrofit process of freight wagons along the given parameters. The visualizer will then present the results and inform the user about the key results of the simulation. The user can also "debug" the simulation with a time travel function to get a feeling of the bottlenecks.
